@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小說名字替換器</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1008;
+    --parchment: #f5ede0;
+    --gold: #b8860b;
+    --gold-light: #d4a843;
+    --rose: #8b3a52;
+    --rose-light: #c4607a;
+    --cream: #fdf6ec;
+    --shadow: rgba(26, 16, 8, 0.15);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Noto Serif TC', serif;
+    background: var(--parchment);
+    color: var(--ink);
+    min-height: 100vh;
+    background-image:
+      radial-gradient(ellipse at 20% 10%, rgba(184,134,11,0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 90%, rgba(139,58,82,0.08) 0%, transparent 50%);
+    padding: 2rem 1rem 4rem;
+  }
+  .container { max-width: 780px; margin: 0 auto; }
+  header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    position: relative;
+    padding-bottom: 2rem;
+  }
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 120px; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .header-deco {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 0.85rem;
+    color: var(--gold);
+    letter-spacing: 0.2em;
+    margin-bottom: 0.5rem;
+    opacity: 0.8;
+  }
+  h1 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 5vw, 2.8rem); font-weight: 700; color: var(--ink); line-height: 1.2; margin-bottom: 0.5rem; }
+  h1 span { color: var(--rose); }
+  .subtitle { font-size: 0.9rem; color: #6b5744; font-weight: 300; letter-spacing: 0.05em; }
+  .card {
+    background: var(--cream);
+    border: 1px solid rgba(184,134,11,0.25);
+    border-radius: 4px;
+    padding: 1.8rem;
+    margin-bottom: 1.2rem;
+    box-shadow: 0 2px 8px var(--shadow), inset 0 1px 0 rgba(255,255,255,0.6);
+    position: relative;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--rose), var(--gold));
+    border-radius: 4px 4px 0 0;
+  }
+  .card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem; font-weight: 700;
+    color: var(--rose);
+    margin-bottom: 1rem;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .names-row { display: grid; grid-template-columns: 1fr auto 1fr; gap: 1rem; align-items: end; }
+  .arrow-col { display: flex; align-items: center; justify-content: center; padding-bottom: 0.8rem; color: var(--gold); font-size: 1.4rem; }
+  .field-group { display: flex; flex-direction: column; gap: 0.4rem; }
+  label { font-size: 0.78rem; color: #7a6352; letter-spacing: 0.08em; font-weight: 500; }
+  input[type="text"] {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 0.95rem;
+    padding: 0.65rem 0.9rem;
+    border: 1px solid rgba(184,134,11,0.3);
+    border-radius: 3px;
+    background: white; color: var(--ink);
+    transition: border-color 0.2s, box-shadow 0.2s;
+    width: 100%;
+  }
+  input[type="text"]:focus { outline: none; border-color: var(--rose); box-shadow: 0 0 0 3px rgba(139,58,82,0.1); }
+  .btn-add {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 0.82rem; padding: 0.4rem 0.9rem;
+    border: 1px dashed rgba(184,134,11,0.5);
+    border-radius: 3px; background: transparent;
+    color: var(--gold); cursor: pointer; transition: all 0.2s;
+  }
+  .btn-add:hover { background: rgba(184,134,11,0.08); border-style: solid; }
+  .extra-pair {
+    display: grid; grid-template-columns: 1fr auto 1fr auto;
+    gap: 0.7rem; align-items: center; margin-top: 0.8rem;
+    animation: fadeSlide 0.25s ease;
+  }
+  @keyframes fadeSlide { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+  .arrow-small { color: var(--gold); font-size: 1rem; text-align: center; }
+  .btn-remove { background: none; border: none; color: #c4607a; cursor: pointer; font-size: 1rem; padding: 0 0.2rem; opacity: 0.6; transition: opacity 0.2s; }
+  .btn-remove:hover { opacity: 1; }
+
+  /* ── TXT Upload Zone ── */
+  .upload-zone {
+    border: 2px dashed rgba(184,134,11,0.4);
+    border-radius: 4px;
+    padding: 2rem 1rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.25s;
+    background: white;
+    position: relative;
+    margin-bottom: 1rem;
+  }
+  .upload-zone:hover, .upload-zone.dragover {
+    border-color: var(--rose);
+    background: rgba(139,58,82,0.04);
+  }
+  .upload-zone input[type="file"] {
+    position: absolute; inset: 0;
+    opacity: 0; cursor: pointer; width: 100%; height: 100%;
+  }
+  .upload-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+  .upload-label { font-size: 0.9rem; color: #7a6352; }
+  .upload-label strong { color: var(--rose); }
+  .upload-hint { font-size: 0.78rem; color: #a08060; margin-top: 0.3rem; }
+  .file-loaded {
+    display: none;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.8rem 1rem;
+    background: rgba(139,58,82,0.06);
+    border: 1px solid rgba(139,58,82,0.2);
+    border-radius: 3px;
+    margin-bottom: 1rem;
+    animation: fadeSlide 0.2s ease;
+  }
+  .file-loaded.visible { display: flex; }
+  .file-name { font-size: 0.88rem; color: var(--rose); font-weight: 500; flex: 1; }
+  .file-size { font-size: 0.78rem; color: #a08060; }
+  .btn-clear-file { background: none; border: none; color: #c4607a; cursor: pointer; font-size: 0.8rem; opacity: 0.7; transition: opacity 0.2s; }
+  .btn-clear-file:hover { opacity: 1; }
+
+  /* divider */
+  .or-divider {
+    display: flex; align-items: center; gap: 0.8rem;
+    margin-bottom: 1rem; color: #a08060; font-size: 0.8rem;
+  }
+  .or-divider::before, .or-divider::after {
+    content: ''; flex: 1; height: 1px; background: rgba(184,134,11,0.2);
+  }
+
+  textarea {
+    font-family: 'Noto Serif TC', serif; font-size: 0.9rem; line-height: 1.9;
+    width: 100%; min-height: 160px; padding: 1rem;
+    border: 1px solid rgba(184,134,11,0.3); border-radius: 3px;
+    background: white; color: var(--ink); resize: vertical; transition: border-color 0.2s;
+  }
+  textarea:focus { outline: none; border-color: var(--rose); box-shadow: 0 0 0 3px rgba(139,58,82,0.1); }
+  .empty-hint { font-size: 0.82rem; color: #a08060; font-style: italic; margin-top: 0.6rem; }
+
+  .btn-main {
+    font-family: 'Noto Serif TC', serif; font-size: 1rem; font-weight: 500;
+    padding: 0.9rem 2.5rem;
+    background: linear-gradient(135deg, var(--rose), #6b2a3e);
+    color: #fdf6ec; border: none; border-radius: 3px; cursor: pointer;
+    letter-spacing: 0.12em; transition: all 0.25s;
+    box-shadow: 0 3px 12px rgba(139,58,82,0.3);
+    display: block; width: 100%; margin-top: 0.5rem;
+  }
+  .btn-main:hover { background: linear-gradient(135deg, var(--rose-light), var(--rose)); box-shadow: 0 5px 18px rgba(139,58,82,0.4); transform: translateY(-1px); }
+  .btn-main:active { transform: translateY(0); }
+
+  .result-section { display: none; }
+  .result-section.visible { display: block; animation: fadeSlide 0.3s ease; }
+  .result-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem; flex-wrap: wrap; gap: 0.5rem; }
+  .stats { font-size: 0.8rem; color: #7a6352; background: rgba(184,134,11,0.1); border: 1px solid rgba(184,134,11,0.2); border-radius: 20px; padding: 0.25rem 0.8rem; }
+  .stats span { color: var(--rose); font-weight: 700; }
+  .result-actions { display: flex; gap: 0.6rem; flex-wrap: wrap; align-items: center; }
+  .btn-copy {
+    font-family: 'Noto Serif TC', serif; font-size: 0.82rem; padding: 0.4rem 1rem;
+    background: white; border: 1px solid rgba(184,134,11,0.4); border-radius: 3px;
+    color: var(--gold); cursor: pointer; transition: all 0.2s;
+  }
+  .btn-copy:hover { background: rgba(184,134,11,0.08); }
+  .btn-copy.copied { color: var(--rose); border-color: var(--rose); }
+  .btn-download {
+    font-family: 'Noto Serif TC', serif; font-size: 0.82rem; padding: 0.4rem 1rem;
+    background: linear-gradient(135deg, var(--rose), #6b2a3e);
+    color: #fdf6ec; border: none; border-radius: 3px;
+    cursor: pointer; transition: all 0.2s;
+    text-decoration: none; display: inline-block;
+  }
+  .btn-download:hover { opacity: 0.85; }
+  .result-text {
+    font-size: 0.9rem; line-height: 2; background: white;
+    border: 1px solid rgba(184,134,11,0.2); border-radius: 3px;
+    padding: 1.2rem; white-space: pre-wrap; word-break: break-all;
+    max-height: 420px; overflow-y: auto; color: var(--ink);
+  }
+  .result-text mark { background: rgba(196,96,122,0.2); color: var(--rose); border-radius: 2px; padding: 0 2px; font-weight: 500; }
+
+  /* ── Name Scanner ── */
+  .scan-section { display: none; margin-top: 1rem; animation: fadeSlide 0.3s ease; }
+  .scan-section.visible { display: block; }
+  .scan-title { font-size: 0.82rem; color: #7a6352; margin-bottom: 0.6rem; letter-spacing: 0.05em; }
+  .name-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .name-chip {
+    display: flex; align-items: center; gap: 0.4rem;
+    padding: 0.35rem 0.75rem;
+    background: white; border: 1px solid rgba(184,134,11,0.35);
+    border-radius: 20px; cursor: pointer; transition: all 0.2s;
+    font-family: 'Noto Serif TC', serif; font-size: 0.82rem; color: var(--ink);
+  }
+  .name-chip:hover { border-color: var(--rose); background: rgba(139,58,82,0.05); }
+  .name-chip.selected { background: rgba(139,58,82,0.1); border-color: var(--rose); color: var(--rose); }
+  .name-chip .chip-count { font-size: 0.7rem; color: #a08060; }
+  .name-chip.selected .chip-count { color: var(--rose-light); }
+  .btn-scan {
+    font-family: 'Noto Serif TC', serif; font-size: 0.82rem; padding: 0.4rem 1rem;
+    background: white; border: 1px solid rgba(184,134,11,0.4); border-radius: 3px;
+    color: var(--gold); cursor: pointer; transition: all 0.2s; margin-top: 0.8rem;
+  }
+  .btn-scan:hover { background: rgba(184,134,11,0.08); }
+  .scan-hint { font-size: 0.75rem; color: #a08060; margin-top: 0.5rem; font-style: italic; }
+  .ornament { text-align: center; color: var(--gold); opacity: 0.4; font-size: 1.2rem; margin: 0.5rem 0; letter-spacing: 0.5em; }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="header-deco">✦ 專屬訂製 ✦</div>
+    <h1>小說名字<span>替換器</span></h1>
+    <p class="subtitle">將故事裡的名字，換成你心裡那個人的名字</p>
+  </header>
+
+  <!-- 名字設定 -->
+  <div class="card">
+    <div class="card-title"><span>✎</span> 設定替換名字</div>
+    <div class="names-row">
+      <div class="field-group">
+        <label>原本的名字（書中）</label>
+        <input type="text" id="from-0" placeholder="例：陸司遇">
+      </div>
+      <div class="arrow-col">→</div>
+      <div class="field-group">
+        <label>替換成（你的人）</label>
+        <input type="text" id="to-0" placeholder="例：你的名字">
+      </div>
+    </div>
+    <div id="extra-pairs"></div>
+    <div style="margin-top:1rem;">
+      <button class="btn-add" onclick="addPair()">＋ 新增更多名字</button>
+    </div>
+
+    <!-- 自動偵測人名結果 -->
+    <div id="scan-section" class="scan-section">
+      <div class="scan-title">📊 偵測到的人名（點擊自動填入）</div>
+      <div class="name-chips" id="name-chips"></div>
+      <p class="scan-hint">點名字填入「原本名字」欄，再填右側「替換成」的名字</p>
+    </div>
+  </div>
+
+  <!-- 小說輸入 -->
+  <div class="card">
+    <div class="card-title"><span>📖</span> 匯入小說文字</div>
+
+    <!-- 上傳區 -->
+    <div class="upload-zone" id="upload-zone"
+         ondragover="handleDragOver(event)"
+         ondragleave="handleDragLeave(event)"
+         ondrop="handleDrop(event)">
+      <input type="file" accept=".txt" onchange="handleFileSelect(event)">
+      <div class="upload-icon">📂</div>
+      <div class="upload-label">點擊選擇 <strong>.txt 檔案</strong>，或直接拖曳到這裡</div>
+      <div class="upload-hint">自動偵測編碼，或手動選擇</div>
+    </div>
+
+    <!-- 編碼選擇器 -->
+    <div style="display:flex;align-items:center;gap:0.7rem;margin-top:0.8rem;flex-wrap:wrap;">
+      <label style="font-size:0.8rem;color:#7a6352;white-space:nowrap;">📝 編碼：</label>
+      <select id="encoding-select" style="font-family:'Noto Serif TC',serif;font-size:0.82rem;padding:0.35rem 0.7rem;border:1px solid rgba(184,134,11,0.3);border-radius:3px;background:white;color:#1a1008;cursor:pointer;">
+        <option value="auto">🔍 自動偵測</option>
+        <option value="UTF-8">UTF-8（最常見）</option>
+        <option value="Big5">Big5（繁體中文）</option>
+        <option value="GBK">GBK / GB2312（簡體中文）</option>
+        <option value="GB18030">GB18030（簡體擴充版）</option>
+        <option value="Shift_JIS">Shift-JIS（日文）</option>
+        <option value="EUC-JP">EUC-JP（日文）</option>
+        <option value="EUC-KR">EUC-KR（韓文）</option>
+        <option value="ISO-8859-1">ISO-8859-1（西歐）</option>
+        <option value="Windows-1252">Windows-1252（西歐 Windows）</option>
+        <option value="UTF-16">UTF-16</option>
+      </select>
+      <span id="encoding-detected" style="font-size:0.78rem;color:#c4607a;display:none;"></span>
+    </div>
+
+    <!-- 已載入檔案狀態 -->
+    <div class="file-loaded" id="file-loaded" style="margin-top:0.8rem;">
+      <span>📄</span>
+      <span class="file-name" id="file-name"></span>
+      <span class="file-size" id="file-size"></span>
+      <button class="btn-clear-file" onclick="clearFile()">✕ 清除</button>
+    </div>
+
+    <button class="btn-scan" id="btn-scan" onclick="scanNames()" style="display:none;width:100%;margin-bottom:0.8rem;">🔍 自動偵測人名（上傳後點此）</button>
+    <div class="or-divider">或者手動貼上文字</div>
+
+    <textarea id="novel-input" placeholder="把小說段落貼在這裡…&#10;&#10;上傳 .txt 後文字會自動填入，也可以直接在這裡貼上內容。"></textarea>
+    <p class="empty-hint">支援一次替換多個名字 · 替換完成可直接下載為 .txt 檔案</p>
+  </div>
+
+  <button class="btn-main" onclick="doReplace()">✦ 開始替換 ✦</button>
+
+  <div class="ornament" style="margin: 1.5rem 0;">· · ·</div>
+
+  <div class="result-section" id="result-section">
+    <div class="card">
+      <div class="result-header">
+        <div class="card-title" style="margin:0"><span>💌</span> 替換結果</div>
+        <div class="result-actions">
+          <div class="stats" id="stats-display"></div>
+          <button class="btn-copy" id="copy-btn" onclick="copyResult()">複製全文</button>
+          <button class="btn-download" onclick="downloadResult()">⬇ 下載 .txt</button>
+        </div>
+      </div>
+      <div class="result-text" id="result-text"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  let pairCount = 1;
+  let currentFileName = '替換結果.txt';
+
+  // ── 名字欄位 ──
+  function addPair() {
+    const container = document.getElementById('extra-pairs');
+    const div = document.createElement('div');
+    div.className = 'extra-pair';
+    div.id = 'pair-' + pairCount;
+    div.innerHTML = `
+      <input type="text" id="from-${pairCount}" placeholder="原本名字">
+      <span class="arrow-small">→</span>
+      <input type="text" id="to-${pairCount}" placeholder="替換成">
+      <button class="btn-remove" onclick="removePair(${pairCount})" title="刪除">✕</button>
+    `;
+    container.appendChild(div);
+    pairCount++;
+  }
+
+  function removePair(id) {
+    const el = document.getElementById('pair-' + id);
+    if (el) el.remove();
+  }
+
+  function getPairs() {
+    const pairs = [];
+    const from0 = document.getElementById('from-0').value.trim();
+    const to0 = document.getElementById('to-0').value.trim();
+    if (from0 && to0) pairs.push({ from: from0, to: to0 });
+    document.querySelectorAll('.extra-pair').forEach(el => {
+      const id = el.id.replace('pair-', '');
+      const f = document.getElementById('from-' + id)?.value.trim();
+      const t = document.getElementById('to-' + id)?.value.trim();
+      if (f && t) pairs.push({ from: f, to: t });
+    });
+    return pairs;
+  }
+
+  // ── 檔案上傳 ──
+  function handleDragOver(e) {
+    e.preventDefault();
+    document.getElementById('upload-zone').classList.add('dragover');
+  }
+  function handleDragLeave(e) {
+    document.getElementById('upload-zone').classList.remove('dragover');
+  }
+  function handleDrop(e) {
+    e.preventDefault();
+    document.getElementById('upload-zone').classList.remove('dragover');
+    const file = e.dataTransfer.files[0];
+    if (file) loadFile(file);
+  }
+  function handleFileSelect(e) {
+    const file = e.target.files[0];
+    if (file) loadFile(file);
+  }
+
+  function loadFile(file) {
+    if (!file.name.endsWith('.txt')) {
+      alert('請選擇 .txt 格式的檔案！');
+      return;
+    }
+    currentFileName = file.name.replace('.txt', '') + '_替換版.txt';
+
+    const selectedEncoding = document.getElementById('encoding-select').value;
+    const detectedEl = document.getElementById('encoding-detected');
+
+    if (selectedEncoding === 'auto') {
+      const encodingQueue = ['UTF-8', 'GB18030', 'Big5', 'GBK', 'Shift_JIS', 'EUC-JP', 'EUC-KR', 'Windows-1252', 'ISO-8859-1'];
+      tryEncodings(file, encodingQueue, 0, detectedEl);
+    } else {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const text = e.target.result;
+        if (text.includes('�')) {
+          detectedEl.textContent = '⚠️ 用 ' + selectedEncoding + ' 讀取仍有亂碼，請嘗試其他編碼';
+          detectedEl.style.color = '#c44';
+          detectedEl.style.display = 'inline';
+        } else {
+          detectedEl.textContent = '✓ 已用 ' + selectedEncoding + ' 讀取';
+          detectedEl.style.color = '#8b3a52';
+          detectedEl.style.display = 'inline';
+        }
+        document.getElementById('novel-input').value = text;
+      };
+      reader.readAsText(file, selectedEncoding);
+    }
+
+    const sizeKB = (file.size / 1024).toFixed(1);
+    const sizeMB = file.size > 1024*1024 ? (file.size/1024/1024).toFixed(2) + ' MB' : sizeKB + ' KB';
+    document.getElementById('file-name').textContent = file.name;
+    document.getElementById('file-size').textContent = sizeMB;
+    document.getElementById('file-loaded').classList.add('visible');
+  }
+
+  function tryEncodings(file, queue, index, detectedEl) {
+    if (index >= queue.length) {
+      detectedEl.textContent = '⚠️ 無法自動偵測，請手動選擇編碼';
+      detectedEl.style.color = '#c44';
+      detectedEl.style.display = 'inline';
+      return;
+    }
+    const enc = queue[index];
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const text = e.target.result;
+      if (!text.includes('�')) {
+        document.getElementById('novel-input').value = text;
+        document.getElementById('btn-scan').style.display = 'inline-block';
+        detectedEl.textContent = '✓ 自動偵測為 ' + enc;
+        detectedEl.style.color = '#8b3a52';
+        detectedEl.style.display = 'inline';
+        document.getElementById('encoding-select').value = enc;
+      } else {
+        tryEncodings(file, queue, index + 1, detectedEl);
+      }
+    };
+    reader.readAsText(file, enc);
+  }
+
+
+  // ── 名字掃描 ──
+  function scanNames() {
+    const text = document.getElementById('novel-input').value;
+    if (!text.trim()) { alert('請先上傳小說！'); return; }
+
+    // 用 regex 找2-4字的中文詞組，統計出現次數
+    const counts = {};
+    // 2字名
+    const matches2 = text.match(/[一-鿿]{2}/g) || [];
+    // 3字名
+    const matches3 = text.match(/[一-鿿]{3}/g) || [];
+    // 4字名
+    const matches4 = text.match(/[一-鿿]{4}/g) || [];
+
+    [...matches2, ...matches3, ...matches4].forEach(w => {
+      counts[w] = (counts[w] || 0) + 1;
+    });
+
+    // 過濾：出現20次以上，排除常見詞
+    const stopWords = new Set(['什麼','為什麼','這樣','那樣','一個','一些','沒有','所有','因為','所以','但是','然後','如果','雖然','已經','可以','不是','還是','只是','看著','說道','這個','那個','一直','自己','知道','覺得','時候','出來','回來','過來','進來','下去','上去','走去','想到','想起','看到','聽到','感覺','開始','繼續','結束','不知','不會','不要','不能','不行','沒想','沒有','現在','之前','之後','突然','終於','原來','其實','只有','而且','並且','或者','雖然','即使','無論','不管','怎麼','怎樣','哪裡','哪個','什麼','這裡','那裡','一起','一下','一點','一樣','一定','一般','一切','一次','告訴','看見','想著','說著','走著','做著']);
+
+    const filtered = Object.entries(counts)
+      .filter(([w, c]) => c >= 20 && !stopWords.has(w))
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 20);
+
+    const container = document.getElementById('name-chips');
+    container.innerHTML = '';
+
+    if (filtered.length === 0) {
+      container.innerHTML = '<span style="font-size:0.82rem;color:#a08060;">未找到高頻名字，請手動輸入</span>';
+    } else {
+      filtered.forEach(([name, count]) => {
+        const chip = document.createElement('button');
+        chip.className = 'name-chip';
+        chip.innerHTML = name + ' <span class="chip-count">×' + count + '</span>';
+        chip.onclick = () => fillName(name, chip);
+        container.appendChild(chip);
+      });
+    }
+
+    document.getElementById('scan-section').classList.add('visible');
+  }
+
+  let fillCount = 0;
+  function fillName(name, chip) {
+    // 找第一個空的「from」輸入框
+    const allFroms = [document.getElementById('from-0')];
+    document.querySelectorAll('.extra-pair').forEach(el => {
+      const id = el.id.replace('pair-', '');
+      const inp = document.getElementById('from-' + id);
+      if (inp) allFroms.push(inp);
+    });
+
+    // 如果已選，取消選取並清空
+    if (chip.classList.contains('selected')) {
+      chip.classList.remove('selected');
+      allFroms.forEach(inp => { if (inp.value === name) inp.value = ''; });
+      return;
+    }
+
+    // 找第一個空的輸入框填入
+    let filled = false;
+    for (const inp of allFroms) {
+      if (!inp.value.trim()) {
+        inp.value = name;
+        filled = true;
+        break;
+      }
+    }
+
+    // 如果沒有空的，自動新增一組
+    if (!filled) {
+      addPair();
+      setTimeout(() => {
+        const newId = pairCount - 1;
+        const newInp = document.getElementById('from-' + newId);
+        if (newInp) newInp.value = name;
+      }, 50);
+    }
+
+    chip.classList.add('selected');
+  }
+
+  function clearFile() {
+    document.getElementById('novel-input').value = '';
+    document.getElementById('btn-scan').style.display = 'none';
+    document.getElementById('scan-section').classList.remove('visible');
+    document.getElementById('name-chips').innerHTML = '';
+    document.getElementById('file-loaded').classList.remove('visible');
+    document.getElementById('encoding-detected').style.display = 'none';
+    currentFileName = '替換結果.txt';
+    document.getElementById('encoding-select').value = 'auto';
+    const zone = document.getElementById('upload-zone');
+    const inp = zone.querySelector('input[type=file]');
+    inp.value = '';
+  }
+
+    // ── 替換邏輯 ──
+  function escapeRegex(str) {
+    return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  }
+
+  function getReplaced() {
+    const text = document.getElementById('novel-input').value;
+    const pairs = getPairs();
+    let result = text;
+    pairs.forEach(pair => {
+      const regex = new RegExp(escapeRegex(pair.from), 'g');
+      result = result.replace(regex, '\x00' + pair.to + '\x00');
+    });
+    return result;
+  }
+
+  function doReplace() {
+    const text = document.getElementById('novel-input').value;
+    if (!text.trim()) { alert('請先上傳 .txt 檔案或貼入小說文字！'); return; }
+    const pairs = getPairs();
+    if (pairs.length === 0) { alert('請填入至少一組替換名字！'); return; }
+
+    let result = text;
+    let totalCount = 0;
+    pairs.forEach(pair => {
+      const regex = new RegExp(escapeRegex(pair.from), 'g');
+      const matches = (result.match(regex) || []).length;
+      totalCount += matches;
+      result = result.replace(regex, '\x00' + pair.to + '\x00');
+    });
+
+    const escaped = result.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    const highlighted = escaped.replace(/\x00([^\x00]+)\x00/g, '<mark>$1</mark>');
+
+    document.getElementById('result-text').innerHTML = highlighted;
+    document.getElementById('stats-display').innerHTML = `共替換 <span>${totalCount}</span> 處`;
+
+    const section = document.getElementById('result-section');
+    section.classList.add('visible');
+    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    const copyBtn = document.getElementById('copy-btn');
+    copyBtn.textContent = '複製全文';
+    copyBtn.classList.remove('copied');
+  }
+
+  function getFinalText() {
+    const text = document.getElementById('novel-input').value;
+    const pairs = getPairs();
+    let result = text;
+    pairs.forEach(pair => {
+      const regex = new RegExp(escapeRegex(pair.from), 'g');
+      result = result.replace(regex, pair.to);
+    });
+    return result;
+  }
+
+  function copyResult() {
+    navigator.clipboard.writeText(getFinalText()).then(() => {
+      const btn = document.getElementById('copy-btn');
+      btn.textContent = '✓ 已複製！';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = '複製全文'; btn.classList.remove('copied'); }, 2000);
+    });
+  }
+
+  function downloadResult() {
+    const text = getFinalText();
+    const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = currentFileName;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+</script>
+</body>
+</html>
