@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>漫食光｜拍攝行程計劃</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;900&family=Noto+Sans+TC:wght@300;400;500&display=swap');
+:root{
+  --sand:#F2EDE4; --ocean:#2E6E7E; --ocean-light:#4A9BAD;
+  --bark:#5C4A35; --text:#2A2A2A; --muted:#7A7A7A;
+  --white:#FFFFFF; --accent:#D4784A; --foam:#E8F4F7;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--sand);color:var(--text);font-family:"Noto Sans TC",sans-serif;font-weight:300;min-height:100vh;}
+
+.hero{background:var(--ocean);padding:50px 24px 60px;text-align:center;position:relative;overflow:hidden;}
+.hero::after{content:"";position:absolute;bottom:-1px;left:0;right:0;height:44px;background:var(--sand);clip-path:ellipse(55% 100% at 50% 100%);}
+.hero-eyebrow{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--ocean-light);margin-bottom:12px;}
+.hero h1{font-family:"Noto Serif TC",serif;font-size:clamp(28px,7vw,44px);font-weight:900;color:var(--white);line-height:1.3;margin-bottom:8px;}
+.hero-sub{font-size:13px;color:rgba(255,255,255,0.6);letter-spacing:1px;}
+
+.container{max-width:640px;margin:0 auto;padding:20px 20px 60px;}
+
+.section-label{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin:32px 0 14px;display:flex;align-items:center;gap:10px;}
+.section-label::after{content:"";flex:1;height:1px;background:var(--ocean);opacity:0.15;}
+
+/* 行程卡片 */
+.trip-card{background:var(--white);border-radius:16px;padding:20px;margin-bottom:14px;box-shadow:0 2px 14px rgba(0,0,0,0.06);text-decoration:none;color:var(--text);display:flex;align-items:center;gap:16px;transition:transform .15s, box-shadow .15s;}
+.trip-card:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,0.1);}
+.trip-icon{width:52px;height:52px;border-radius:12px;background:var(--foam);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;}
+.trip-info{flex:1;}
+.trip-name{font-family:"Noto Serif TC",serif;font-size:16px;font-weight:600;margin-bottom:3px;}
+.trip-meta{font-size:11px;color:var(--muted);display:flex;gap:10px;flex-wrap:wrap;}
+.trip-meta span{display:flex;align-items:center;gap:3px;}
+.trip-arrow{color:var(--ocean-light);font-size:18px;flex-shrink:0;}
+
+/* 即將推出 */
+.coming-card{background:var(--white);border-radius:16px;padding:20px;margin-bottom:14px;box-shadow:0 2px 14px rgba(0,0,0,0.04);display:flex;align-items:center;gap:16px;opacity:0.45;}
+.coming-icon{width:52px;height:52px;border-radius:12px;background:#f0f0f0;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;}
+.coming-label{font-size:10px;background:#eee;color:#999;padding:2px 8px;border-radius:10px;font-weight:500;margin-top:4px;display:inline-block;}
+
+/* 說明區塊 */
+.info-box{background:var(--white);border-radius:14px;padding:18px;box-shadow:0 2px 12px rgba(0,0,0,0.04);margin-top:32px;}
+.info-title{font-size:12px;font-weight:500;color:var(--ocean);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;}
+.info-list{list-style:none;padding:0;}
+.info-list li{font-size:13px;color:var(--text);padding:5px 0;border-bottom:1px solid var(--sand);display:flex;gap:8px;}
+.info-list li:last-child{border-bottom:none;}
+
+footer{text-align:center;padding:20px;font-size:11px;color:var(--muted);letter-spacing:1px;border-top:1px solid rgba(0,0,0,0.07);}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-eyebrow">masa_cookingram</div>
+  <h1>漫食光<br>拍攝計劃</h1>
+  <div class="hero-sub">所有行程計劃都在這裡 · 隨時查閱</div>
+</div>
+
+<div class="container">
+
+  <div class="section-label">已完成計劃</div>
+
+  <a href="trips/sanzhi.html" class="trip-card">
+    <div class="trip-icon">🌊</div>
+    <div class="trip-info">
+      <div class="trip-name">三芝北海岸漫食光</div>
+      <div class="trip-meta">
+        <span>📍 田心子 · 芝蘭公園</span>
+        <span>🧁 廣泰香 · Zoom In</span>
+        <span>🎬 2支影片</span>
+      </div>
+    </div>
+    <div class="trip-arrow">›</div>
+  </a>
+
+  <div class="section-label">即將加入</div>
+
+  <div class="coming-card">
+    <div class="coming-icon">🏔️</div>
+    <div class="trip-info">
+      <div class="trip-name">金山・石門漫食光</div>
+      <span class="coming-label">規劃中</span>
+    </div>
+  </div>
+
+  <div class="coming-card">
+    <div class="coming-icon">🌿</div>
+    <div class="trip-info">
+      <div class="trip-name">老梅・富貴角漫食光</div>
+      <span class="coming-label">規劃中</span>
+    </div>
+  </div>
+
+  <div class="info-box">
+    <div class="info-title">使用說明</div>
+    <ul class="info-list">
+      <li>📱 <div>把這個網址加入手機主畫面，隨時開啟</div></li>
+      <li>🔄 <div>換手機也不怕，資料全部存在雲端</div></li>
+      <li>✨ <div>每次規劃新行程，我會自動幫你更新這裡</div></li>
+      <li>🗺️ <div>點進各行程，裡面有景點地圖連結、必拍角度、點心採買資訊</div></li>
+    </ul>
+  </div>
+
+</div>
+
+<footer>漫食光拍攝計劃 ｜ masa_cookingram</footer>
+</body>
+</html>
