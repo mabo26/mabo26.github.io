@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>三芝北海岸漫食光｜拍攝計劃表</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;900&family=Noto+Sans+TC:wght@300;400;500&display=swap');
+:root {
+  --sand:#F2EDE4; --ocean:#2E6E7E; --ocean-light:#4A9BAD;
+  --foam:#E8F4F7; --bark:#5C4A35; --moss:#6B8C6B;
+  --text:#2A2A2A; --muted:#7A7A7A; --white:#FFFFFF;
+  --accent:#D4784A; --warn:#C0392B; --warn-bg:#FFF0EE;
+  --season:#7B5EA7; --season-bg:#F3EEFF;
+  --gold:#8B6914; --gold-bg:#FFFBF0; --gold-border:#F0D080;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--sand);color:var(--text);font-family:'Noto Sans TC',sans-serif;font-weight:300;line-height:1.7;}
+
+.hero{background:var(--ocean);padding:44px 24px 52px;text-align:center;position:relative;overflow:hidden;}
+.hero::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:40px;background:var(--sand);clip-path:ellipse(55% 100% at 50% 100%);}
+.hero-eyebrow{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--ocean-light);margin-bottom:10px;}
+.hero h1{font-family:'Noto Serif TC',serif;font-size:clamp(26px,6vw,40px);font-weight:900;color:var(--white);line-height:1.3;margin-bottom:6px;}
+.hero-sub{font-size:12px;color:rgba(255,255,255,0.6);letter-spacing:1px;}
+
+.summary{display:flex;justify-content:center;background:var(--bark);flex-wrap:wrap;}
+.summary-item{flex:1;min-width:90px;text-align:center;padding:12px 6px;border-right:1px solid rgba(255,255,255,0.12);}
+.summary-item:last-child{border-right:none;}
+.s-icon{font-size:17px;display:block;margin-bottom:1px;}
+.s-label{font-size:9px;color:rgba(255,255,255,0.5);letter-spacing:1px;text-transform:uppercase;display:block;}
+.s-val{font-size:12px;color:var(--white);font-weight:500;}
+
+.season-banner{background:var(--season-bg);border-left:4px solid var(--season);margin:20px 20px 0;border-radius:0 12px 12px 0;padding:14px 18px;}
+.season-title{font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--season);margin-bottom:6px;}
+.season-banner ul{padding-left:16px;}
+.season-banner ul li{font-size:13px;color:var(--text);margin-bottom:3px;}
+
+.depart-box{background:var(--ocean);border-radius:14px;margin:14px 20px 0;padding:16px 20px;color:var(--white);}
+.depart-title{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--ocean-light);margin-bottom:10px;}
+.depart-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.depart-label{font-size:10px;color:rgba(255,255,255,0.55);letter-spacing:1px;margin-bottom:2px;}
+.depart-val{font-size:13px;font-weight:500;}
+.depart-warn{margin-top:12px;background:rgba(255,255,255,0.12);border-radius:8px;padding:10px 14px;font-size:12px;color:rgba(255,255,255,0.85);}
+
+.container{max-width:780px;margin:0 auto;padding:0 20px 60px;}
+
+.film-divider{display:flex;align-items:center;gap:12px;margin:32px 0 4px;}
+.film-divider::before,.film-divider::after{content:'';flex:1;height:1px;background:var(--ocean);opacity:0.2;}
+.film-label{background:var(--ocean);color:var(--white);font-size:11px;letter-spacing:2px;padding:5px 18px;border-radius:20px;white-space:nowrap;}
+
+.section-title{display:flex;align-items:center;gap:10px;margin:24px 0 14px;}
+.st-icon{width:32px;height:32px;background:var(--ocean);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
+.section-title h2{font-family:'Noto Serif TC',serif;font-size:18px;font-weight:600;color:var(--ocean);}
+.section-title .badge{margin-left:auto;background:var(--warn-bg);color:var(--warn);font-size:10px;padding:3px 10px;border-radius:20px;letter-spacing:1px;white-space:nowrap;font-weight:500;}
+
+.card{background:var(--white);border-radius:16px;overflow:hidden;margin-bottom:16px;box-shadow:0 2px 16px rgba(0,0,0,0.06);}
+.spot-imgs{display:grid;grid-template-columns:1fr 1fr 1fr;height:180px;gap:2px;}
+.spot-imgs img{width:100%;height:100%;object-fit:cover;display:block;background:var(--foam);}
+.card-body{padding:18px;}
+.card-tag{display:inline-block;font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:3px 10px;border-radius:20px;margin-bottom:7px;font-weight:500;}
+.tag-spot{background:#E8F4F7;color:var(--ocean);}
+.tag-food{background:#FDF0E8;color:var(--accent);}
+.tag-lunch{background:#EFF6EE;color:var(--moss);}
+.card-name{font-family:'Noto Serif TC',serif;font-size:17px;font-weight:600;margin-bottom:4px;}
+.card-sub{font-size:12px;color:var(--muted);margin-bottom:14px;}
+
+.link-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;}
+.link-btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:20px;font-size:12px;font-weight:500;text-decoration:none;}
+.btn-map{background:#E8F4F7;color:var(--ocean);}
+.btn-ig{background:#f5e8f5;color:#7B3F9E;}
+.btn-fb{background:#e8eef8;color:#1a5bb5;}
+.btn-web{background:#f0f0f0;color:#444;}
+
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;}
+.info-item{background:var(--sand);border-radius:10px;padding:9px 12px;}
+.il{font-size:9px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:2px;}
+.iv{font-size:12px;font-weight:500;color:var(--text);}
+
+.hours-box{background:var(--gold-bg);border:1px solid var(--gold-border);border-radius:10px;padding:10px 14px;margin-bottom:10px;}
+.hours-title{font-size:10px;font-weight:500;letter-spacing:1px;color:var(--gold);text-transform:uppercase;margin-bottom:6px;}
+.hours-row{font-size:12px;margin-bottom:3px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.closed-badge{background:#FDECEA;color:var(--warn);font-size:10px;font-weight:500;padding:2px 8px;border-radius:10px;}
+.open-badge{background:#EAF7EA;color:#2E7D32;font-size:10px;font-weight:500;padding:2px 8px;border-radius:10px;}
+
+/* 出爐時間表 */
+.bake-table{width:100%;border-collapse:collapse;font-size:11px;margin-top:8px;}
+.bake-table th{background:var(--bark);color:var(--white);padding:5px 8px;text-align:left;font-weight:500;}
+.bake-table td{padding:5px 8px;border-bottom:1px solid var(--sand);}
+.bake-table tr:last-child td{border-bottom:none;}
+.bake-table tr:nth-child(even) td{background:#fafaf8;}
+
+.must-shoot{background:#FFF8F0;border-left:3px solid var(--accent);border-radius:0 10px 10px 0;padding:12px 16px;margin-bottom:10px;}
+.ms-title{font-size:10px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:7px;}
+.ms-item{display:flex;gap:8px;margin-bottom:6px;font-size:13px;align-items:flex-start;}
+.ms-item:last-child{margin-bottom:0;}
+.ms-num{background:var(--accent);color:var(--white);font-size:10px;font-weight:500;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+
+.tips{background:var(--foam);border-left:3px solid var(--ocean-light);border-radius:0 10px 10px 0;padding:11px 15px;margin-bottom:10px;}
+.tips-title{font-size:10px;font-weight:500;letter-spacing:1px;text-transform:uppercase;color:var(--ocean);margin-bottom:6px;}
+.tips ul{padding-left:15px;}
+.tips ul li{font-size:12px;color:var(--text);margin-bottom:3px;}
+
+.warn-box{background:var(--warn-bg);border-left:3px solid var(--warn);border-radius:0 10px 10px 0;padding:9px 13px;font-size:12px;color:#8B2020;margin-bottom:8px;}
+
+.connector{display:flex;align-items:center;justify-content:center;gap:8px;color:var(--muted);font-size:12px;margin:4px 0;}
+.connector::before,.connector::after{content:'';flex:1;height:1px;background:var(--ocean-light);opacity:0.3;}
+
+.lunch-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}
+.lunch-card{background:var(--white);border-radius:14px;padding:16px;box-shadow:0 2px 12px rgba(0,0,0,0.05);}
+.lunch-tag{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--moss);background:#EFF6EE;padding:2px 8px;border-radius:10px;font-weight:500;display:inline-block;margin-bottom:6px;}
+.lunch-name{font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;margin-bottom:4px;}
+.lunch-desc{font-size:11px;color:var(--muted);margin-bottom:8px;line-height:1.5;}
+.lunch-info div{font-size:11px;color:var(--text);margin-bottom:3px;}
+
+.timeline-card{background:var(--white);border-radius:14px;padding:18px;box-shadow:0 2px 12px rgba(0,0,0,0.05);margin-bottom:16px;}
+.timeline-row{display:flex;gap:12px;padding:7px 0;border-bottom:1px solid var(--sand);font-size:13px;align-items:flex-start;}
+.timeline-row:last-child{border-bottom:none;}
+.timeline-time{font-weight:500;color:var(--ocean);min-width:52px;font-size:12px;padding-top:2px;}
+
+.checklist{background:var(--white);border-radius:14px;padding:18px;box-shadow:0 2px 12px rgba(0,0,0,0.05);}
+.checklist ul{list-style:none;padding:0;}
+.checklist ul li{font-size:13px;padding:7px 0;border-bottom:1px solid var(--sand);display:flex;gap:8px;align-items:flex-start;}
+.checklist ul li:last-child{border-bottom:none;}
+
+footer{text-align:center;padding:20px;font-size:11px;color:var(--muted);letter-spacing:1px;border-top:1px solid rgba(0,0,0,0.07);}
+
+@media(max-width:480px){
+  .info-grid,.depart-grid,.lunch-grid{grid-template-columns:1fr;}
+  .spot-imgs{height:130px;}
+  .link-btn{font-size:11px;padding:6px 11px;}
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-eyebrow">masa_cookingram 拍攝計劃</div>
+  <h1>三芝北海岸<br>漫食光</h1>
+  <div class="hero-sub">2 外帶點心 &nbsp;·&nbsp; 2 景點 &nbsp;·&nbsp; 2 支影片</div>
+</div>
+
+<div class="summary">
+  <div class="summary-item"><span class="s-icon">🎬</span><span class="s-label">影片</span><span class="s-val">2 支</span></div>
+  <div class="summary-item"><span class="s-icon">🧁</span><span class="s-label">外帶點心</span><span class="s-val">2 間</span></div>
+  <div class="summary-item"><span class="s-icon">📍</span><span class="s-label">景點</span><span class="s-val">2 個</span></div>
+  <div class="summary-item"><span class="s-icon">🍜</span><span class="s-label">午餐</span><span class="s-val">2 選項</span></div>
+  <div class="summary-item"><span class="s-icon">🚗</span><span class="s-label">出發地</span><span class="s-val">紅樹林站</span></div>
+</div>
+
+<!-- 季節提醒 -->
+<div class="season-banner">
+  <div class="season-title">🌿 6月底 季節提醒</div>
+  <ul>
+    <li>☀️ 夏季氣溫高，建議上午或傍晚 4 點後拍攝，避開正午強光</li>
+    <li>🌊 田心子水量充足，雨後倒影效果最好，地面濕滑要注意</li>
+    <li>💨 芝蘭公園平台夏天風大日曬強，傍晚前往光線最美</li>
+    <li>🌅 夏季日落約 18:30～19:00，若想拍落日可延後芝蘭公園時間</li>
+    <li>❌ 老梅綠石槽綠藻季（3～5月）已過，此行程未排入</li>
+  </ul>
+</div>
+
+<!-- 出發資訊 -->
+<div class="depart-box">
+  <div class="depart-title">🚗 出發資訊</div>
+  <div class="depart-grid">
+    <div>
+      <div class="depart-label">出發地點</div>
+      <div class="depart-val">紅樹林捷運站</div>
+    </div>
+    <div>
+      <div class="depart-label">建議出發時間</div>
+      <div class="depart-val">約 10:45（配合廣泰香 11:00 出爐）</div>
+    </div>
+    <div>
+      <div class="depart-label">紅樹林 → 廣泰香麵包（途中）</div>
+      <div class="depart-val">約 10 分鐘（淡金路三段，順路必經）</div>
+    </div>
+    <div>
+      <div class="depart-label">廣泰香 → 田心子</div>
+      <div class="depart-val">約 20 分鐘（繼續沿淡金路往三芝）</div>
+    </div>
+    <div>
+      <div class="depart-label">田心子 → 淺水灣（Zoom In）</div>
+      <div class="depart-val">約 15 分鐘（往海邊方向）</div>
+    </div>
+    <div>
+      <div class="depart-label">Zoom In → 芝蘭公園</div>
+      <div class="depart-val">步行約 3 分鐘</div>
+    </div>
+  </div>
+  <div class="depart-warn">💡 廣泰香在紅樹林往三芝的必經路上，出發途中順路採買，完全不繞路！</div>
+</div>
+
+<div class="container">
+
+<!-- 行程順序 -->
+<div class="film-divider" style="margin-top:28px;"><span class="film-label">📋 今日行程順序</span></div>
+<div class="timeline-card">
+  <div class="timeline-row"><div class="timeline-time">10:45</div><div>🔵 紅樹林捷運站出發</div></div>
+  <div class="timeline-row"><div class="timeline-time">11:00</div><div>🧁 途中停靠 <strong>廣泰香西點麵包</strong> 採買點心 A（順路，10分鐘可到）</div></div>
+  <div class="timeline-row"><div class="timeline-time">11:30</div><div>📍 抵達 <strong>田心子</strong> 拍攝影片一（車程約20分鐘）</div></div>
+  <div class="timeline-row"><div class="timeline-time">12:15</div><div>🍜 午餐（前往淺水灣途中或到了再吃，擇一快速解決）</div></div>
+  <div class="timeline-row"><div class="timeline-time">13:00</div><div>🧁 抵達淺水灣，<strong>Zoom In</strong> 開門採買點心 B</div></div>
+  <div class="timeline-row"><div class="timeline-time">13:15</div><div>📍 步行前往 <strong>芝蘭公園平台</strong> 拍攝影片二（步行約3分鐘）</div></div>
+  <div class="timeline-row" style="color:var(--muted);font-size:12px;"><div class="timeline-time">選擇性</div><div>🌅 若想拍落日，芝蘭公園可延至 17:30 後前往</div></div>
+</div>
+
+<!-- ===== 影片一 ===== -->
+<div class="film-divider"><span class="film-label">🎬 影片一｜菠蘿麵包 × 田心子秘境</span></div>
+
+<!-- 採買 A -->
+<div class="section-title">
+  <div class="st-icon">🧁</div>
+  <h2>先採買點心 A</h2>
+  <span class="badge">⚠️ 先買才能去拍</span>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <span class="card-tag tag-food">🧁 外帶點心 A</span>
+    <div class="card-name">廣泰香西點麵包店</div>
+    <div class="card-sub">北海岸40年老字號 ｜ 紅樹林往三芝必經路上 ｜ 順路採買不繞路</div>
+
+    <div class="link-row">
+      <a href="https://maps.google.com/?q=廣泰香西點麵包+新北市淡水區淡金路三段347號" target="_blank" class="link-btn btn-map">🗺️ Google Maps</a>
+      <a href="https://www.facebook.com/profile.php?id=100063770668357" target="_blank" class="link-btn btn-fb">Facebook 粉絲團</a>
+    </div>
+
+    <div class="hours-box">
+      <div class="hours-title">⏰ 營業時間 ＆ 出爐時間</div>
+      <div class="hours-row">🕐 平日 08:00 – 22:00 &nbsp;｜&nbsp; 假日 08:00 – 18:30</div>
+      <div class="hours-row"><span class="open-badge">✅ 全週無固定公休，穩定營業</span></div>
+      <div class="hours-row" style="margin-top:6px;font-size:11px;color:var(--gold);">📋 菠蘿麵包出爐時間表（以現場為準）</div>
+      <table class="bake-table">
+        <tr><th>出爐時間</th><th>口味</th></tr>
+        <tr><td>上午 11:00</td><td>丹麥菠蘿、菠蘿可頌、日式奶油</td></tr>
+        <tr><td>下午 14:30</td><td>原味、乳酪條、爆漿</td></tr>
+        <tr><td>下午 15:00</td><td>奶酥、安佳奶油、花生Q心、高鈣</td></tr>
+        <tr><td>下午 15:30</td><td>小紅豆、草莓、藍莓、地瓜、大花豆、巧克力、芋頭</td></tr>
+        <tr><td>下午 16:00</td><td>肉鬆、叉燒（最搶手）</td></tr>
+      </table>
+    </div>
+
+    <div class="info-grid">
+      <div class="info-item">
+        <div class="il">📌 地址</div>
+        <div class="iv">新北市淡水區淡金路三段347號</div>
+      </div>
+      <div class="info-item">
+        <div class="il">📞 電話</div>
+        <div class="iv">02-2622-3015</div>
+      </div>
+      <div class="info-item">
+        <div class="il">🚗 停車</div>
+        <div class="iv">門口黃線可短暫臨停，假日人多車多，建議快買快走</div>
+      </div>
+      <div class="info-item">
+        <div class="il">✅ 外帶</div>
+        <div class="iv">麵包全部外帶，不怕融化，帶去田心子拍攝完全沒問題</div>
+      </div>
+    </div>
+
+    <div class="tips">
+      <div class="tips-title">採買 ＆ 拍攝建議</div>
+      <ul>
+        <li>上午11點出爐的丹麥菠蘿、菠蘿可頌最適合這個時段採買</li>
+        <li>金黃色圓形菠蘿麵包搭配田心子綠色水田，色彩對比強烈好看</li>
+        <li>建議買 2～3 顆不同口味，拍攝時可以有多種組合</li>
+        <li>假日熱門口味搶手，建議平日前往或提早到</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="connector">🚗 繼續往三芝方向，車程約 20 分鐘</div>
+
+<!-- 景點 A -->
+<div class="section-title">
+  <div class="st-icon">📍</div>
+  <h2>拍攝景點一</h2>
+</div>
+
+<div class="card">
+  <div class="spot-imgs">
+    <img src="https://lh3.googleusercontent.com/place-photos/AJRVUZNcUfl280v_WJZ6tuwE_QNQMCSPRY2rZTJsSBfByhR3VaTPT2H8shti7tcHfDM--peeSCoa5h9V03EZPPuj8jvYVvS5lLmwhOzSixjRQCycqxjHMUpLhUWGhGA8MS8EOsJm5P3RatI16v0wmQ=s800" alt="田心子1" onerror="this.style.background='#C8DFD0';this.alt=''">
+    <img src="https://lh3.googleusercontent.com/place-photos/AJRVUZOUJGxECrdEDQWilB0MnO6l81gmccPLmS_EpAK4gsZHgEDgFX67DdpvgYWfP4TipW-9Xo-ECcl-y6XAsOU6sNiwTBoVYGcm_TVeHQ4usvU5v1CxOXkin7YePzXWsapVJjJbW8gWsvrlKKse=s800" alt="田心子2" onerror="this.style.background='#b0d0b8';this.alt=''">
+    <img src="https://lh3.googleusercontent.com/place-photos/AJRVUZMuKySLQpL-o1UMkUIu6bZ_4dMJJcp9LeSJmZaZ5wRsUyOQrVwCFq4swGaVse3tFzxq5F344R3Y0UlQsbDxE-ukOZo59D7eDOclghZ551dq5jEQsiRmjFJa7yvqrVexAL6WMHxJ8-b5prkl7A=s800" alt="田心子3" onerror="this.style.background='#98c0a0';this.alt=''">
+  </div>
+  <div class="card-body">
+    <span class="card-tag tag-spot">📍 景點一</span>
+    <div class="card-name">三芝田心子</div>
+    <div class="card-sub">免門票秘境水田 ｜ 全年開放 ｜ 人少好拍</div>
+
+    <div class="link-row">
+      <a href="https://maps.google.com/?cid=9987834090008792950" target="_blank" class="link-btn btn-map">🗺️ Google Maps</a>
+    </div>
+
+    <div class="info-grid">
+      <div class="info-item">
+        <div class="il">📌 地址</div>
+        <div class="iv">新北市三芝區興華里奎柔山路（北8鄉道4.5km處）</div>
+      </div>
+      <div class="info-item">
+        <div class="il">🚗 停車</div>
+        <div class="iv">景點旁白線臨停，空間有限，建議平日前往</div>
+      </div>
+      <div class="info-item">
+        <div class="il">⏰ 建議停留</div>
+        <div class="iv">30～45 分鐘</div>
+      </div>
+      <div class="info-item">
+        <div class="il">💰 費用</div>
+        <div class="iv">免費</div>
+      </div>
+    </div>
+
+    <div class="must-shoot">
+      <div class="ms-title">📸 必拍角度 ＆ 必拍景</div>
+      <div class="ms-item"><div class="ms-num">1</div><div><strong>水面倒影俯拍</strong>｜低角度把菠蘿麵包放木棧道旁，背景是水田倒影，晴天水天一色最仙</div></div>
+      <div class="ms-item"><div class="ms-num">2</div><div><strong>水中石頭擺拍</strong>｜把麵包放在水中踏石上，四面都是水，孤島感強，角度要低</div></div>
+      <div class="ms-item"><div class="ms-num">3</div><div><strong>竹林小徑走動</strong>｜老闆手持麵包走進竹林步道，側拍或背影，自然感強</div></div>
+      <div class="ms-item"><div class="ms-num">4</div><div><strong>大樹下休憩區</strong>｜麵包擺在石頭座位旁，背景是池水和遠山，適合靜態特寫</div></div>
+    </div>
+
+    <div class="tips">
+      <div class="tips-title">拍攝注意</div>
+      <ul>
+        <li>6月雨季水量充足，倒影效果好；地面濕滑要注意腳步</li>
+        <li>上午光線從山後射入，午前是黃金拍攝時段</li>
+        <li>木棧道不寬，走動時注意不要踩到道具或麵包</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- 午餐 -->
+<div class="section-title">
+  <div class="st-icon">🍜</div>
+  <h2>午餐（快速擇一）</h2>
+</div>
+<div class="lunch-grid">
+  <div class="lunch-card">
+    <span class="lunch-tag">選項 A｜小吃</span>
+    <div class="lunch-name">老地方小籠湯包</div>
+    <div class="lunch-desc">三芝在地老字號，湯包快速上桌，平價飽足</div>
+    <div class="lunch-info">
+      <div>📌 新北市三芝區中山路一段</div>
+      <div>⏰ 約 10:00 起，賣完為止</div>
+      <div>⚠️ 假日易售完，早去保險</div>
+      <div><a href="https://maps.google.com/?q=老地方小籠湯包+三芝" target="_blank" style="color:var(--ocean);text-decoration:none;">🗺️ Google Maps</a></div>
+    </div>
+  </div>
+  <div class="lunch-card">
+    <span class="lunch-tag">選項 B｜熱炒</span>
+    <div class="lunch-name">金都家常菜</div>
+    <div class="lunch-desc">淺水灣海景第一排，熱炒海鮮平價，吃完步行即可到 Zoom In</div>
+    <div class="lunch-info">
+      <div>📌 新北市三芝區後厝村41-3號</div>
+      <div>⏰ 平日 10:00–14:00、17:00–21:00</div>
+      <div>⏰ 假日 10:00–21:00</div>
+      <div><a href="https://maps.google.com/?q=金都家常菜+三芝淺水灣" target="_blank" style="color:var(--ocean);text-decoration:none;">🗺️ Google Maps</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 影片二 ===== -->
+<div class="film-divider"><span class="film-label">🎬 影片二｜霜淇淋 × 芝蘭公園海景</span></div>
+
+<!-- 採買 B -->
+<div class="section-title">
+  <div class="st-icon">🧁</div>
+  <h2>先採買點心 B</h2>
+  <span class="badge">⚠️ 先買才能去拍</span>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <span class="card-tag tag-food">🧁 外帶點心 B</span>
+    <div class="card-name">Zoom In</div>
+    <div class="card-sub">每日限定霜淇淋 ＋ 巴斯克乳酪 ｜ Google ⭐ 5.0 ｜ 買完步行3分鐘到景點</div>
+
+    <div class="link-row">
+      <a href="https://maps.google.com/?q=Zoom+In+新北市三芝區北勢子16號" target="_blank" class="link-btn btn-map">🗺️ Google Maps</a>
+      <a href="https://www.instagram.com/zoomin252/" target="_blank" class="link-btn btn-ig">📷 IG @zoomin252</a>
+    </div>
+
+    <div class="hours-box">
+      <div class="hours-title">⏰ 營業時間 ＆ 公休日</div>
+      <div class="hours-row">🕐 每日 13:00 – 19:00</div>
+      <div class="hours-row"><span class="closed-badge">⛔ 週四 公休</span>&nbsp;請避開週四出發</div>
+      <div class="hours-row"><span class="open-badge">✅ 週一、二、三、五、六、日 正常營業</span></div>
+      <div class="hours-row" style="color:var(--muted);font-size:11px;margin-top:2px;">※ 建議出發前確認 IG @zoomin252，偶有臨時休息</div>
+    </div>
+
+    <div class="info-grid">
+      <div class="info-item">
+        <div class="il">📌 地址</div>
+        <div class="iv">新北市三芝區北勢子16號</div>
+      </div>
+      <div class="info-item">
+        <div class="il">📞 電話</div>
+        <div class="iv">0911-356-952</div>
+      </div>
+      <div class="info-item">
+        <div class="il">🚗 停車</div>
+        <div class="iv">門口白線，或淺水灣停車場（步行約8分鐘）</div>
+      </div>
+      <div class="info-item">
+        <div class="il">💳 付款</div>
+        <div class="iv">現金、Line Pay（不收服務費）</div>
+      </div>
+    </div>
+
+    <div class="warn-box">⚠️ 霜淇淋融化很快！買完直接步行3分鐘到芝蘭公園拍，不要帶遠</div>
+
+    <div class="tips">
+      <div class="tips-title">採買建議</div>
+      <ul>
+        <li>霜淇淋＋巴斯克套餐最上鏡，銀色托盤記得帶出來拍</li>
+        <li>巴斯克不怕融化，可多帶一份在長廊慢慢拍</li>
+        <li>每天口味不同，出發前先看 IG @zoomin252 公告</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="connector">🚶 步行約 3 分鐘</div>
+
+<!-- 景點 B -->
+<div class="section-title">
+  <div class="st-icon">📍</div>
+  <h2>拍攝景點二</h2>
+</div>
+
+<div class="card">
+  <div class="spot-imgs">
+    <img src="https://lh3.googleusercontent.com/place-photos/AJRVUZOya3DY284wh2NuI6dKcc39hoXcKUWAlKkiveoA0zgYODK2lVlxTymrgoJOVNXThW_7Rmn1a4mJXJEuVtbMJE1p_7LIDdshDcJzxALOgBhtgcVX0tztw8jP-Qj-chzOgQlMu-Cabouk4jWX01U9geRl=s800" alt="芝蘭公園1" onerror="this.style.background='#C8DFE8';this.alt=''">
+    <img src="https://lh3.googleusercontent.com/place-photos/AJRVUZP7QmRgdGdvBS6lfk3cxgg7RStPsWXhX-gpVTaZcCzML1BfhouubayYtd5PXs2jCbKIaAEntksFNwR_Wnkd5fAtxgn37CTBIE7FgjnzfVLhBjfV5Ao4TrZwZbaPwphCugxBJ1d4A0ousxsgwMMcPmr7yQ=s800" alt="芝蘭公園2" onerror="this.style.background='#b0cfe0';this.alt=''">
+    <img src="https://lh3.googleusercontent.com/place-photos/AJRVUZNMr11z4vJkSkf_eDQosuEVLjCaX0KYajIfpuyqUBo7ODhSOVR5vAsdhRfo_q6Jz4XWq_r5BJI7rhySdqrYxbjN7dCBA6JEvo30-tfuDuVTHc60clZjBdGfgRA5o-1aRCX0LJNfatD6ZPddFbQ=s800" alt="芝蘭公園3" onerror="this.style.background='#98bfd5';this.alt=''">
+  </div>
+  <div class="card-body">
+    <span class="card-tag tag-spot">📍 景點二</span>
+    <div class="card-name">芝蘭公園海上觀景平台</div>
+    <div class="card-sub">57公尺水藍波浪長廊 ｜ 360度無死角海景 ｜ 全天免費開放</div>
+
+    <div class="link-row">
+      <a href="https://maps.google.com/?cid=14395114271348089041" target="_blank" class="link-btn btn-map">🗺️ Google Maps</a>
+      <a href="https://www.northguan-nsa.gov.tw/user/article.aspx?Lang=1&SNo=04007243" target="_blank" class="link-btn btn-web">🌐 官方介紹</a>
+    </div>
+
+    <div class="info-grid">
+      <div class="info-item">
+        <div class="il">📌 地址</div>
+        <div class="iv">新北市三芝區大湖路（芝蘭公園內）</div>
+      </div>
+      <div class="info-item">
+        <div class="il">🚗 停車</div>
+        <div class="iv">淺水灣公有停車場 100元/日，步行約5分鐘到平台</div>
+      </div>
+      <div class="info-item">
+        <div class="il">⏰ 開放時間</div>
+        <div class="iv">全天 24 小時，傍晚 16:30 後光線最美</div>
+      </div>
+      <div class="info-item">
+        <div class="il">💰 費用</div>
+        <div class="iv">免費</div>
+      </div>
+    </div>
+
+    <div class="must-shoot">
+      <div class="ms-title">📸 必拍角度 ＆ 必拍景</div>
+      <div class="ms-item"><div class="ms-num">1</div><div><strong>長廊走動剪影</strong>｜老闆手持霜淇淋走在水藍長廊上，從後方或側面拍，海天一線當背景，最強畫面</div></div>
+      <div class="ms-item"><div class="ms-num">2</div><div><strong>護欄旁食物特寫</strong>｜霜淇淋或巴斯克放藍色護欄上，以海為背景拍俯視或平視，藍白對比強</div></div>
+      <div class="ms-item"><div class="ms-num">3</div><div><strong>戒指裝置藝術</strong>｜長廊盡頭大戒指，點心放前景、戒指和海當背景，很有故事感</div></div>
+      <div class="ms-item"><div class="ms-num">4</div><div><strong>夕陽逆光</strong>｜17:30 後前往，夕陽打在長廊上金光感強，人物逆光剪影效果極佳</div></div>
+    </div>
+
+    <div class="warn-box">⚠️ 夏天日曬強、風大，霜淇淋融化快，買完要先拍霜淇淋特寫再拍其他角度</div>
+    <div class="warn-box">⚠️ 假日人多，長廊擁擠，建議平日前往</div>
+  </div>
+</div>
+
+<!-- 出發前清單 -->
+<div class="section-title">
+  <div class="st-icon">📋</div>
+  <h2>出發前確認清單</h2>
+</div>
+<div class="checklist">
+  <ul>
+    <li>📅 <div><strong>確認星期幾出發</strong>｜Zoom In 週四公休，這天不能成行</div></li>
+    <li>📱 <div><strong>Zoom In IG @zoomin252</strong>｜出發前確認當日霜淇淋口味＆是否正常營業</div></li>
+    <li>🍞 <div><strong>廣泰香出爐時間</strong>｜上午11點出爐丹麥菠蘿、菠蘿可頌，配合這個時段出發最剛好</div></li>
+    <li>🌤️ <div><strong>天氣確認</strong>｜田心子晴天倒影最美；芝蘭公園晴天海最藍</div></li>
+    <li>🅿️ <div><strong>假日停車</strong>｜淺水灣停車場假日易滿，建議及早抵達；廣泰香門口黃線快買快走</div></li>
+    <li>💨 <div><strong>芝蘭公園風大</strong>｜輕薄食物、紙袋拍攝時要固定好</div></li>
+    <li>🌅 <div><strong>若想拍落日</strong>｜夏季日落約 18:30，芝蘭公園 17:30 後前往即可</div></li>
+  </ul>
+</div>
+
+</div>
+<footer>漫食光拍攝計劃 ｜ 三芝北海岸 ｜ masa_cookingram</footer>
+</body>
+</html>
