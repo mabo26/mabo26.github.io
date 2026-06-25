@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🪬 手串記帳本</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #f5f0ea; font-family: 'Segoe UI', sans-serif; }
+    input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
+  </style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { useState, useRef, useEffect } = React;
+const STORAGE_KEY = "beibei_tracker_v2";
+
+const defaultDeposits = [
+  { id: "d1", amount: 703, date: "2026-04-14", note: "初始預存 (335+368)", imagePreview: null },
+];
+const defaultPurchases = [
+  { id: "p2",  name: "老松石", price: 680, date: "2026-04-25", imagePreview: null, settled: false },
+  { id: "p3",  name: "白水晶六角柱配黃水晶紫水晶海藍寶吊墜 14k包金", price: 230, date: "2026-05-10", imagePreview: null, settled: false },
+  { id: "p5",  name: "海藍寶心型戒指", price: 568, date: "2026-05-12", imagePreview: null, settled: false },
+  { id: "p7",  name: "保山8", price: 1399, date: "2026-05-30", imagePreview: null, settled: false },
+  { id: "p8",  name: "茶晶（深）", price: 168, date: "2026-06-09", imagePreview: null, settled: false },
+  { id: "p9",  name: "藍虎眼", price: 198, date: "2026-06-09", imagePreview: null, settled: false },
+  { id: "p10", name: "藍虎眼", price: 198, date: "2026-06-09", imagePreview: null, settled: false },
+  { id: "p13", name: "畢業級金太陽貔貅", price: 86, date: "2026-06-01", imagePreview: null, settled: false },
+  { id: "p14", name: "畢業級金太陽貔貅", price: 86, date: "2026-06-01", imagePreview: null, settled: false },
+  { id: "p11", name: "彩碧手串", price: 278, date: "2026-06-17", imagePreview: null, settled: false },
+  { id: "p12", name: "白屍屍手串", price: 699, date: "2026-06-17", imagePreview: null, settled: false },
+];
+
+function loadData() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) return JSON.parse(raw);
+  } catch {}
+  return { deposits: defaultDeposits, purchases: defaultPurchases };
+}
+function saveData(d, p) {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify({ deposits: d, purchases: p })); } catch {}
+}
+
+function readFile(file) {
+  return new Promise(res => {
+    const r = new FileReader();
+    r.onload = e => res(e.target.result);
+    r.readAsDataURL(file);
+  });
+}
+
+// ── Summary Card ──────────────────────────────────────────
+function SummaryCard({ label, value, color, bg, border }) {
+  return (
+    <div style={{ flex: 1, minWidth: 100, background: bg, borderRadius: 12, padding: "12px 14px", border: `1.5px solid ${border}` }}>
+      <div style={{ color: "#8b7355", fontSize: 11, marginBottom: 4 }}>{label}</div>
+      <div style={{ color, fontSize: 18, fontWeight: 800 }}>¥{value}</div>
+    </div>
+  );
+}
+
+// ── Deposit Card ──────────────────────────────────────────
+function DepositCard({ item, onDelete }) {
+  const [exp, setExp] = useState(false);
+  const [big, setBig] = useState(false);
+  return (
+    <div style={{ background: "#f0faf4", border: "1.5px solid #b2ddc4", borderRadius: 14, marginBottom: 10, overflow: "hidden" }}>
+      <div style={{ display: "flex", alignItems: "center", padding: "12px 14px", cursor: "pointer", gap: 12 }} onClick={() => setExp(e => !e)}>
+        <div style={{ width: 44, height: 44, borderRadius: 8, background: "#c8ecd5", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20, flexShrink: 0, overflow: "hidden" }}>
+          {item.imagePreview
+            ? <img src={item.imagePreview} alt="" style={{ width: 44, height: 44, objectFit: "cover" }} onClick={e => { e.stopPropagation(); setBig(b => !b); }} />
+            : "💰"}
+        </div>
+        <div style={{ flex: 1 }}>
+          <div style={{ color: "#2d7a4f", fontWeight: 700, fontSize: 14 }}>存款{item.note ? `｜${item.note}` : ""}</div>
+          <div style={{ color: "#7aaa8a", fontSize: 12, marginTop: 2 }}>{item.date}</div>
+        </div>
+        <div style={{ color: "#2d7a4f", fontWeight: 800, fontSize: 16 }}>+¥{item.amount}</div>
+      </div>
+      {big && item.imagePreview && (
+        <div style={{ padding: "0 14px 12px" }}>
+          <img src={item.imagePreview} alt="" style={{ width: "100%", borderRadius: 10, maxHeight: 300, objectFit: "contain" }} onClick={() => setBig(false)} />
+        </div>
+      )}
+      {exp && (
+        <div style={{ padding: "0 14px 12px", borderTop: "1px solid #b2ddc4", paddingTop: 10 }}>
+          <button onClick={() => onDelete(item.id)} style={dangerBtn}>🗑 刪除記錄</button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ── Purchase Card ─────────────────────────────────────────
+function PurchaseCard({ item, onSettle, onDelete }) {
+  const [exp, setExp] = useState(false);
+  const [big, setBig] = useState(false);
+  return (
+    <div style={{ background: item.settled ? "#f9f6f2" : "#fff", border: `1.5px solid ${item.settled ? "#e0d5c5" : "#e8d5b5"}`, borderRadius: 14, marginBottom: 10, overflow: "hidden", opacity: item.settled ? 0.65 : 1 }}>
+      <div style={{ display: "flex", alignItems: "center", padding: "12px 14px", cursor: "pointer", gap: 12 }} onClick={() => setExp(e => !e)}>
+        <div style={{ width: 44, height: 44, borderRadius: 8, background: "#f5eee5", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20, flexShrink: 0, overflow: "hidden" }}>
+          {item.imagePreview
+            ? <img src={item.imagePreview} alt="" style={{ width: 44, height: 44, objectFit: "cover" }} onClick={e => { e.stopPropagation(); setBig(b => !b); }} />
+            : "🪬"}
+        </div>
+        <div style={{ flex: 1 }}>
+          <div style={{ color: item.settled ? "#b09070" : "#4a3020", fontWeight: 600, fontSize: 14 }}>
+            {item.name}
+            {item.settled && <span style={{ marginLeft: 8, color: "#2d7a4f", fontSize: 11, fontWeight: 700 }}>✓ 已結清</span>}
+          </div>
+          <div style={{ color: "#c0a882", fontSize: 12, marginTop: 2 }}>{item.date}</div>
+        </div>
+        <div style={{ color: item.settled ? "#c0a882" : "#c0392b", fontWeight: 800, fontSize: 16 }}>¥{item.price}</div>
+      </div>
+      {big && item.imagePreview && (
+        <div style={{ padding: "0 14px 12px" }}>
+          <img src={item.imagePreview} alt="" style={{ width: "100%", borderRadius: 10, maxHeight: 300, objectFit: "contain" }} onClick={() => setBig(false)} />
+        </div>
+      )}
+      {exp && (
+        <div style={{ padding: "0 14px 12px", borderTop: "1px solid #e8d5b5", paddingTop: 10, display: "flex", gap: 8 }}>
+          {!item.settled && (
+            <button onClick={() => onSettle(item.id)} style={{ ...greenBtn, flex: 1 }}>✓ 標記已結清</button>
+          )}
+          <button onClick={() => onDelete(item.id)} style={dangerBtn}>🗑 刪除</button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ── Main App ──────────────────────────────────────────────
+function App() {
+  const saved = loadData();
+  const [deposits, setDeposits] = useState(saved.deposits);
+  const [purchases, setPurchases] = useState(saved.purchases);
+  const [tab, setTab] = useState("all");
+  const [showForm, setShowForm] = useState(false);
+  const [formType, setFormType] = useState("purchase");
+  const [form, setForm] = useState({ name: "", price: "", date: "", note: "", imagePreview: null });
+  const [showAI, setShowAI] = useState(false);
+  const [aiImages, setAiImages] = useState([]);
+  const [aiLoading, setAiLoading] = useState(false);
+  const [aiResult, setAiResult] = useState(null);
+  const [aiError, setAiError] = useState("");
+  const fileRef = useRef();
+  const aiFileRef = useRef();
+
+  useEffect(() => { saveData(deposits, purchases); }, [deposits, purchases]);
+
+  const totalDeposit = deposits.reduce((s, d) => s + d.amount, 0);
+  const totalPurchase = purchases.filter(p => !p.settled).reduce((s, p) => s + p.price, 0);
+  const balance = totalDeposit - totalPurchase;
+
+  // ── Handlers ──
+  const handleImgChange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const preview = await readFile(file);
+    setForm(f => ({ ...f, imagePreview: preview }));
+  };
+
+  const handleAiImgChange = async (e) => {
+    const files = Array.from(e.target.files);
+    if (!files.length) return;
+    setAiResult(null); setAiError("");
+    const previews = await Promise.all(files.map(readFile));
+    setAiImages(prev => [...prev, ...previews.map((preview, i) => ({ preview, mediaType: files[i].type || "image/jpeg" }))]);
+    e.target.value = "";
+  };
+
+  const handleAiAnalyze = async () => {
+    if (!aiImages.length) return;
+    setAiLoading(true); setAiResult(null); setAiError("");
+    try {
+      const imageBlocks = aiImages.map(img => ({
+        type: "image",
+        source: { type: "base64", media_type: img.mediaType, data: img.preview.split(",")[1] }
+      }));
+      const res = await fetch("https://api.anthropic.com/v1/messages", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          model: "claude-sonnet-4-6",
+          max_tokens: 1000,
+          messages: [{ role: "user", content: [
+            ...imageBlocks,
+            { type: "text", text: `以上是${aiImages.length}張與貝貝的微信聊天截圖，請把所有截圖合在一起分析，找出完整的交易記錄。包括：
+1. 購買記錄：商品名稱、金額、日期（截圖間互相對照）
+2. 存款/轉帳記錄：金額、日期、備註
+
+只回傳JSON，不要有其他文字：
+{"deposits":[{"amount":數字,"date":"YYYY-MM-DD或空字串","note":"備註"}],"purchases":[{"name":"商品名稱","price":數字,"date":"YYYY-MM-DD或空字串"}]}
+
+日期只有月日沒有年份就用2026年。沒有記錄就回傳空陣列。` }
+          ]}]
+        })
+      });
+      const data = await res.json();
+      const text = (data.content || []).filter(c => c.type === "text").map(c => c.text).join("");
+      const parsed = JSON.parse(text.replace(/```json|```/g, "").trim());
+      setAiResult(parsed);
+    } catch { setAiError("分析失敗，請再試一次"); }
+    setAiLoading(false);
+  };
+
+  const handleAiConfirm = () => {
+    const now = Date.now();
+    const firstPreview = aiImages[0]?.preview || null;
+    if (aiResult.deposits?.length) {
+      setDeposits(prev => [...prev, ...aiResult.deposits.map((d, i) => ({
+        id: "d" + (now + i), amount: d.amount,
+        date: d.date || new Date().toLocaleDateString("zh-TW"),
+        note: d.note || "", imagePreview: firstPreview,
+      }))]);
+    }
+    if (aiResult.purchases?.length) {
+      setPurchases(prev => [...prev, ...aiResult.purchases.map((p, i) => ({
+        id: "p" + (now + 100 + i), name: p.name, price: p.price,
+        date: p.date || new Date().toLocaleDateString("zh-TW"),
+        imagePreview: firstPreview, settled: false,
+      }))]);
+    }
+    setShowAI(false); setAiImages([]); setAiResult(null); setAiError("");
+  };
+
+  const handleAdd = () => {
+    if (!form.price) return;
+    if (formType === "deposit") {
+      setDeposits(prev => [...prev, { id: "d" + Date.now(), amount: Number(form.price), date: form.date || new Date().toLocaleDateString("zh-TW"), note: form.note, imagePreview: form.imagePreview }]);
+    } else {
+      if (!form.name) return;
+      setPurchases(prev => [...prev, { id: "p" + Date.now(), name: form.name, price: Number(form.price), date: form.date || new Date().toLocaleDateString("zh-TW"), imagePreview: form.imagePreview, settled: false }]);
+    }
+    setForm({ name: "", price: "", date: "", note: "", imagePreview: null });
+    setShowForm(false);
+  };
+
+  const allItems = [
+    ...deposits.map(d => ({ ...d, _type: "deposit", _date: d.date })),
+    ...purchases.map(p => ({ ...p, _type: "purchase", _date: p.date })),
+  ].sort((a, b) => new Date(a._date) - new Date(b._date));
+
+  const filtered = tab === "deposit" ? allItems.filter(i => i._type === "deposit")
+    : tab === "purchase" ? allItems.filter(i => i._type === "purchase") : allItems;
+
+  return (
+    <div style={{ minHeight: "100vh", background: "#f5f0ea", padding: "20px 14px" }}>
+      <div style={{ maxWidth: 600, margin: "0 auto" }}>
+
+        {/* Header */}
+        <div style={{ marginBottom: 20 }}>
+          <h1 style={{ color: "#8b5e3c", fontSize: 22, fontWeight: 800, marginBottom: 2 }}>🪬 手串記帳本</h1>
+          <p style={{ color: "#b09070", fontSize: 12 }}>與貝貝的購買記錄｜幣值：人民幣</p>
+        </div>
+
+        {/* Summary */}
+        <div style={{ display: "flex", gap: 10, marginBottom: 20, flexWrap: "wrap" }}>
+          <SummaryCard label="💰 總存款" value={totalDeposit} color="#2d7a4f" bg="#e6f4ec" border="#b2ddc4" />
+          <SummaryCard label="🛍 未結清" value={totalPurchase} color="#c0392b" bg="#fdecea" border="#f5b7b1" />
+          <SummaryCard label={balance >= 0 ? "✅ 餘額" : "⚠️ 需補款"} value={balance}
+            color={balance >= 0 ? "#1a6fa8" : "#e67e22"}
+            bg={balance >= 0 ? "#e8f4fd" : "#fef3e2"}
+            border={balance >= 0 ? "#aad4f0" : "#fad7a0"} />
+        </div>
+
+        {/* AI Banner */}
+        <div onClick={() => setShowAI(true)} style={{ background: "linear-gradient(135deg,#fff3e0,#ffe0b2)", border: "1.5px dashed #e2b96f", borderRadius: 14, padding: "14px 16px", cursor: "pointer", marginBottom: 16, display: "flex", alignItems: "center", gap: 12 }}>
+          <span style={{ fontSize: 28 }}>📸</span>
+          <div>
+            <div style={{ color: "#8b5e3c", fontWeight: 700, fontSize: 14 }}>上傳聊天截圖自動辨識</div>
+            <div style={{ color: "#b09070", fontSize: 12, marginTop: 2 }}>可同時上傳多張截圖，AI合併分析</div>
+          </div>
+        </div>
+
+        {/* AI Panel */}
+        {showAI && (
+          <div style={{ background: "#fff", border: "1px solid #e8d5b5", borderRadius: 16, padding: 20, marginBottom: 16, boxShadow: "0 2px 12px rgba(139,94,60,0.08)" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14 }}>
+              <h3 style={{ color: "#8b5e3c", fontSize: 15, fontWeight: 700 }}>📸 AI自動辨識截圖</h3>
+              <button onClick={() => { setShowAI(false); setAiImages([]); setAiResult(null); setAiError(""); }} style={{ background: "none", border: "none", color: "#b09070", cursor: "pointer", fontSize: 20 }}>✕</button>
+            </div>
+
+            {/* Image previews */}
+            {aiImages.length > 0 && (
+              <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 12 }}>
+                {aiImages.map((img, i) => (
+                  <div key={i} style={{ position: "relative" }}>
+                    <img src={img.preview} alt="" style={{ width: 80, height: 80, objectFit: "cover", borderRadius: 8, border: "1.5px solid #e8d5b5" }} />
+                    <button onClick={() => setAiImages(prev => prev.filter((_, j) => j !== i))}
+                      style={{ position: "absolute", top: -6, right: -6, width: 20, height: 20, borderRadius: "50%", background: "#c0392b", color: "#fff", border: "none", cursor: "pointer", fontSize: 12, lineHeight: "20px", textAlign: "center", padding: 0 }}>✕</button>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            <div onClick={() => aiFileRef.current.click()} style={{ border: "2px dashed #e2b96f", borderRadius: 10, padding: 14, textAlign: "center", cursor: "pointer", marginBottom: 14, background: "#fffaf5", color: "#b09070", fontSize: 13 }}>
+              {aiImages.length > 0 ? `已選 ${aiImages.length} 張｜點擊繼續新增 📷` : "點擊選擇聊天截圖（可多選）📷"}
+            </div>
+            <input ref={aiFileRef} type="file" accept="image/*" multiple style={{ display: "none" }} onChange={handleAiImgChange} />
+
+            {aiImages.length > 0 && !aiResult && (
+              <button onClick={handleAiAnalyze} disabled={aiLoading} style={{ width: "100%", padding: 13, background: "#e2b96f", color: "#fff", border: "none", borderRadius: 12, fontWeight: 700, fontSize: 14, cursor: "pointer", marginBottom: 10 }}>
+                {aiLoading ? "⏳ AI分析中..." : `🔍 開始辨識（${aiImages.length} 張截圖）`}
+              </button>
+            )}
+
+            {aiError && <div style={{ color: "#c0392b", fontSize: 13, marginBottom: 10 }}>{aiError}</div>}
+
+            {aiResult && (
+              <div>
+                <div style={{ color: "#2d7a4f", fontWeight: 700, fontSize: 13, marginBottom: 8 }}>✅ 辨識結果：</div>
+                {aiResult.deposits?.map((d, i) => (
+                  <div key={i} style={{ background: "#e6f4ec", borderRadius: 8, padding: "8px 12px", marginBottom: 6, fontSize: 13, color: "#2d7a4f" }}>
+                    💰 存款 ¥{d.amount}　{d.date}　{d.note}
+                  </div>
+                ))}
+                {aiResult.purchases?.map((p, i) => (
+                  <div key={i} style={{ background: "#fdecea", borderRadius: 8, padding: "8px 12px", marginBottom: 6, fontSize: 13, color: "#c0392b" }}>
+                    🛍 {p.name}　¥{p.price}　{p.date}
+                  </div>
+                ))}
+                {!aiResult.deposits?.length && !aiResult.purchases?.length && (
+                  <div style={{ color: "#b09070", fontSize: 13 }}>截圖中沒有找到交易記錄</div>
+                )}
+                {(aiResult.deposits?.length > 0 || aiResult.purchases?.length > 0) && (
+                  <button onClick={handleAiConfirm} style={{ width: "100%", padding: 12, background: "#2d7a4f", color: "#fff", border: "none", borderRadius: 12, fontWeight: 700, fontSize: 14, cursor: "pointer", marginTop: 8 }}>確認加入記錄</button>
+                )}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Tabs */}
+        <div style={{ display: "flex", gap: 8, marginBottom: 14 }}>
+          {[["all","全部"],["deposit","存款"],["purchase","購買"]].map(([key, label]) => (
+            <button key={key} onClick={() => setTab(key)} style={{ padding: "7px 18px", borderRadius: 20, border: "none", cursor: "pointer", fontSize: 12, fontWeight: 600, background: tab === key ? "#8b5e3c" : "#e8ddd0", color: tab === key ? "#fff" : "#8b7355" }}>{label}</button>
+          ))}
+        </div>
+
+        {/* List */}
+        <div style={{ marginBottom: 16 }}>
+          {filtered.length === 0 && <div style={{ color: "#c0a882", textAlign: "center", padding: "30px 0", fontSize: 13 }}>暫無記錄</div>}
+          {filtered.map(item => item._type === "deposit"
+            ? <DepositCard key={item.id} item={item} onDelete={id => setDeposits(p => p.filter(d => d.id !== id))} />
+            : <PurchaseCard key={item.id} item={item}
+                onSettle={id => setPurchases(p => p.map(x => x.id === id ? {...x, settled: true} : x))}
+                onDelete={id => setPurchases(p => p.filter(x => x.id !== id))} />
+          )}
+        </div>
+
+        {/* Add Buttons */}
+        {!showForm && (
+          <div style={{ display: "flex", gap: 10 }}>
+            <button onClick={() => { setFormType("purchase"); setShowForm(true); }} style={{ flex: 1, padding: 13, background: "#8b5e3c", color: "#fff", border: "none", borderRadius: 12, fontWeight: 700, fontSize: 14, cursor: "pointer" }}>＋ 新增購買</button>
+            <button onClick={() => { setFormType("deposit"); setShowForm(true); }} style={{ flex: 1, padding: 13, background: "#fff", color: "#2d7a4f", border: "2px solid #2d7a4f", borderRadius: 12, fontWeight: 700, fontSize: 14, cursor: "pointer" }}>＋ 新增存款</button>
+          </div>
+        )}
+
+        {/* Manual Form */}
+        {showForm && (
+          <div style={{ background: "#fff", border: "1px solid #e8d5b5", borderRadius: 16, padding: 20, boxShadow: "0 2px 12px rgba(139,94,60,0.08)" }}>
+            <h3 style={{ color: "#8b5e3c", marginBottom: 16, fontSize: 15, fontWeight: 700 }}>
+              {formType === "deposit" ? "💰 新增存款記錄" : "🛍 新增購買記錄"}
+            </h3>
+            {formType === "purchase" && (
+              <><label style={lbl}>商品名稱</label>
+              <input style={inp} placeholder="例：彩碧手串、藍虎眼..." value={form.name} onChange={e => setForm(f => ({...f, name: e.target.value}))} /></>
+            )}
+            {formType === "deposit" && (
+              <><label style={lbl}>備註（選填）</label>
+              <input style={inp} placeholder="例：第二次存款" value={form.note} onChange={e => setForm(f => ({...f, note: e.target.value}))} /></>
+            )}
+            <label style={lbl}>金額（人民幣）</label>
+            <input style={inp} type="number" placeholder="例：368" value={form.price} onChange={e => setForm(f => ({...f, price: e.target.value}))} />
+            <label style={lbl}>日期（選填）</label>
+            <input style={inp} type="date" value={form.date} onChange={e => setForm(f => ({...f, date: e.target.value}))} />
+            <label style={lbl}>上傳照片（選填）</label>
+            <div onClick={() => fileRef.current.click()} style={{ border: "2px dashed #e2b96f", borderRadius: 10, padding: 14, textAlign: "center", cursor: "pointer", marginBottom: 16, background: "#fffaf5", color: "#b09070", fontSize: 13 }}>
+              {form.imagePreview ? <img src={form.imagePreview} alt="" style={{ maxHeight: 140, borderRadius: 8 }} /> : "點擊上傳照片 📷"}
+            </div>
+            <input ref={fileRef} type="file" accept="image/*" style={{ display: "none" }} onChange={handleImgChange} />
+            <div style={{ display: "flex", gap: 10 }}>
+              <button onClick={handleAdd} style={{ flex: 1, padding: 12, background: formType === "deposit" ? "#2d7a4f" : "#8b5e3c", color: "#fff", border: "none", borderRadius: 10, fontWeight: 700, fontSize: 14, cursor: "pointer" }}>確認新增</button>
+              <button onClick={() => { setShowForm(false); setForm({ name: "", price: "", date: "", note: "", imagePreview: null }); }} style={{ flex: 1, padding: 12, background: "#f0ebe4", color: "#8b7355", border: "none", borderRadius: 10, fontWeight: 700, fontSize: 14, cursor: "pointer" }}>取消</button>
+            </div>
+          </div>
+        )}
+        <div style={{ height: 40 }} />
+      </div>
+    </div>
+  );
+}
+
+const lbl = { display: "block", color: "#8b7355", fontSize: 12, marginBottom: 6, fontWeight: 600 };
+const inp = { width: "100%", background: "#faf7f4", border: "1.5px solid #e0d0bc", borderRadius: 8, padding: "10px 12px", color: "#4a3020", fontSize: 14, marginBottom: 14, display: "block" };
+const dangerBtn = { padding: "10px 16px", border: "none", borderRadius: 10, fontWeight: 700, cursor: "pointer", fontSize: 13, background: "#fdecea", color: "#c0392b" };
+const greenBtn = { padding: "10px 14px", border: "none", borderRadius: 10, fontWeight: 700, cursor: "pointer", fontSize: 13, background: "#e6f4ec", color: "#2d7a4f" };
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+</script>
+</body>
+</html>
