@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>烏來漫食光｜拍攝計劃表</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;900&family=Noto+Sans+TC:wght@300;400;500&display=swap');
+:root{
+  --forest:#2D5A3D; --forest-light:#4A8C5C; --forest-pale:#E8F4EC;
+  --river:#2E6E7E; --river-light:#4A9BAD; --river-pale:#E8F4F7;
+  --sand:#F5F0E8; --bark:#5C4A35; --stone:#7A7A7A;
+  --text:#2A2A2A; --white:#FFFFFF;
+  --accent:#C8793A; --warn:#C0392B; --warn-bg:#FFF0EE;
+  --gold:#8B6914; --gold-bg:#FFFBF0; --gold-border:#F0D080;
+  --season:#7B5EA7; --season-bg:#F3EEFF;
+  --lunch:#4A7C59; --lunch-bg:#EFF6EE;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--sand);color:var(--text);font-family:'Noto Sans TC',sans-serif;font-weight:300;line-height:1.7;}
+
+.hero{background:var(--forest);padding:44px 24px 52px;text-align:center;position:relative;overflow:hidden;}
+.hero::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:40px;background:var(--sand);clip-path:ellipse(55% 100% at 50% 100%);}
+.hero-eyebrow{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--forest-light);margin-bottom:10px;}
+.hero h1{font-family:'Noto Serif TC',serif;font-size:clamp(26px,6vw,40px);font-weight:900;color:var(--white);line-height:1.3;margin-bottom:6px;}
+.hero-sub{font-size:12px;color:rgba(255,255,255,0.6);letter-spacing:1px;}
+
+.summary{display:flex;justify-content:center;background:var(--bark);flex-wrap:wrap;}
+.summary-item{flex:1;min-width:80px;text-align:center;padding:12px 6px;border-right:1px solid rgba(255,255,255,0.12);}
+.summary-item:last-child{border-right:none;}
+.s-icon{font-size:17px;display:block;margin-bottom:1px;}
+.s-label{font-size:9px;color:rgba(255,255,255,0.5);letter-spacing:1px;text-transform:uppercase;display:block;}
+.s-val{font-size:11px;color:var(--white);font-weight:500;}
+
+.season-banner{background:var(--season-bg);border-left:4px solid var(--season);margin:20px 20px 0;border-radius:0 12px 12px 0;padding:14px 18px;}
+.season-title{font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--season);margin-bottom:6px;}
+.season-banner ul{padding-left:16px;}
+.season-banner ul li{font-size:13px;color:var(--text);margin-bottom:3px;}
+
+.depart-box{background:var(--forest);border-radius:14px;margin:14px 20px 0;padding:16px 20px;color:var(--white);}
+.depart-title{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--forest-light);margin-bottom:10px;}
+.depart-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.depart-label{font-size:10px;color:rgba(255,255,255,0.55);letter-spacing:1px;margin-bottom:2px;}
+.depart-val{font-size:13px;font-weight:500;}
+.depart-note{margin-top:12px;background:rgba(255,255,255,0.12);border-radius:8px;padding:10px 14px;font-size:12px;color:rgba(255,255,255,0.85);}
+
+.container{max-width:780px;margin:0 auto;padding:0 20px 60px;}
+
+.film-divider{display:flex;align-items:center;gap:12px;margin:32px 0 4px;}
+.film-divider::before,.film-divider::after{content:'';flex:1;height:1px;background:var(--forest);opacity:0.2;}
+.film-label{background:var(--forest);color:var(--white);font-size:11px;letter-spacing:2px;padding:5px 18px;border-radius:20px;white-space:nowrap;}
+
+.section-title{display:flex;align-items:center;gap:10px;margin:24px 0 14px;}
+.st-icon{width:32px;height:32px;background:var(--forest);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
+.section-title h2{font-family:'Noto Serif TC',serif;font-size:18px;font-weight:600;color:var(--forest);}
+.section-title .badge{margin-left:auto;background:var(--warn-bg);color:var(--warn);font-size:10px;padding:3px 10px;border-radius:20px;letter-spacing:1px;white-space:nowrap;font-weight:500;}
+
+.card{background:var(--white);border-radius:16px;overflow:hidden;margin-bottom:16px;box-shadow:0 2px 16px rgba(0,0,0,0.06);}
+.spot-imgs{display:grid;grid-template-columns:1fr 1fr 1fr;height:180px;gap:2px;}
+.spot-imgs img{width:100%;height:100%;object-fit:cover;display:block;background:var(--forest-pale);}
+.card-body{padding:18px;}
+.card-tag{display:inline-block;font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:3px 10px;border-radius:20px;margin-bottom:7px;font-weight:500;}
+.tag-spot{background:var(--forest-pale);color:var(--forest);}
+.tag-food{background:#FDF0E8;color:var(--accent);}
+.tag-lunch{background:var(--lunch-bg);color:var(--lunch);}
+.tag-bonus{background:#FFF8DC;color:#8B6914;}
+.card-name{font-family:'Noto Serif TC',serif;font-size:17px;font-weight:600;margin-bottom:4px;}
+.card-sub{font-size:12px;color:var(--stone);margin-bottom:14px;}
+
+.link-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;}
+.link-btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:20px;font-size:12px;font-weight:500;text-decoration:none;}
+.btn-map{background:var(--river-pale);color:var(--river);}
+.btn-ig{background:#f5e8f5;color:#7B3F9E;}
+.btn-fb{background:#e8eef8;color:#1a5bb5;}
+.btn-web{background:#f0f0f0;color:#444;}
+.btn-blog{background:#FFF3E0;color:#E65100;}
+
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;}
+.info-item{background:var(--sand);border-radius:10px;padding:9px 12px;}
+.il{font-size:9px;color:var(--stone);letter-spacing:1px;text-transform:uppercase;margin-bottom:2px;}
+.iv{font-size:12px;font-weight:500;color:var(--text);}
+
+.hours-box{background:var(--gold-bg);border:1px solid var(--gold-border);border-radius:10px;padding:10px 14px;margin-bottom:10px;}
+.hours-title{font-size:10px;font-weight:500;letter-spacing:1px;color:var(--gold);text-transform:uppercase;margin-bottom:6px;}
+.hours-row{font-size:12px;margin-bottom:3px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.closed-badge{background:#FDECEA;color:var(--warn);font-size:10px;font-weight:500;padding:2px 8px;border-radius:10px;}
+.open-badge{background:#EAF7EA;color:#2E7D32;font-size:10px;font-weight:500;padding:2px 8px;border-radius:10px;}
+
+.must-shoot{background:#FFF8F0;border-left:3px solid var(--accent);border-radius:0 10px 10px 0;padding:12px 16px;margin-bottom:10px;}
+.ms-title{font-size:10px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:7px;}
+.ms-item{display:flex;gap:8px;margin-bottom:6px;font-size:13px;align-items:flex-start;}
+.ms-item:last-child{margin-bottom:0;}
+.ms-num{background:var(--accent);color:var(--white);font-size:10px;font-weight:500;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+
+.tips{background:var(--forest-pale);border-left:3px solid var(--forest-light);border-radius:0 10px 10px 0;padding:11px 15px;margin-bottom:10px;}
+.tips-title{font-size:10px;font-weight:500;letter-spacing:1px;text-transform:uppercase;color:var(--forest);margin-bottom:6px;}
+.tips ul{padding-left:15px;}
+.tips ul li{font-size:12px;color:var(--text);margin-bottom:3px;}
+
+.warn-box{background:var(--warn-bg);border-left:3px solid var(--warn);border-radius:0 10px 10px 0;padding:9px 13px;font-size:12px;color:#8B2020;margin-bottom:8px;}
+
+.connector{display:flex;align-items:center;justify-content:center;gap:8px;color:var(--stone);font-size:12px;margin:4px 0;}
+.connector::before,.connector::after{content:'';flex:1;height:1px;background:var(--forest-light);opacity:0.3;}
+
+/* 午餐三欄 */
+.lunch-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:16px;}
+.lunch-card{background:var(--white);border-radius:14px;padding:14px;box-shadow:0 2px 12px rgba(0,0,0,0.05);}
+.lunch-tag{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--lunch);background:var(--lunch-bg);padding:2px 8px;border-radius:10px;font-weight:500;display:inline-block;margin-bottom:6px;}
+.lunch-name{font-family:'Noto Serif TC',serif;font-size:13px;font-weight:600;margin-bottom:4px;}
+.lunch-desc{font-size:11px;color:var(--stone);margin-bottom:8px;line-height:1.5;}
+.lunch-info div{font-size:11px;color:var(--text);margin-bottom:2px;}
+
+.timeline-card{background:var(--white);border-radius:14px;padding:18px;box-shadow:0 2px 12px rgba(0,0,0,0.05);margin-bottom:16px;}
+.timeline-row{display:flex;gap:12px;padding:7px 0;border-bottom:1px solid var(--sand);font-size:13px;align-items:flex-start;}
+.timeline-row:last-child{border-bottom:none;}
+.timeline-time{font-weight:500;color:var(--forest);min-width:52px;font-size:12px;padding-top:2px;}
+
+.checklist{background:var(--white);border-radius:14px;padding:18px;box-shadow:0 2px 12px rgba(0,0,0,0.05);}
+.checklist ul{list-style:none;padding:0;}
+.checklist ul li{font-size:13px;padding:7px 0;border-bottom:1px solid var(--sand);display:flex;gap:8px;align-items:flex-start;}
+.checklist ul li:last-child{border-bottom:none;}
+
+/* 加購回家 */
+.bonus-card{background:var(--white);border-radius:14px;padding:16px;box-shadow:0 2px 12px rgba(0,0,0,0.05);border-left:4px solid #E6B84A;margin-bottom:16px;}
+
+footer{text-align:center;padding:20px;font-size:11px;color:var(--stone);letter-spacing:1px;border-top:1px solid rgba(0,0,0,0.07);}
+
+@media(max-width:480px){
+  .info-grid,.depart-grid,.lunch-grid{grid-template-columns:1fr;}
+  .spot-imgs{height:130px;}
+  .link-btn{font-size:11px;padding:6px 10px;}
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-eyebrow">masa_cookingram 拍攝計劃</div>
+  <h1>烏來山林<br>漫食光</h1>
+  <div class="hero-sub">2 外帶點心 &nbsp;·&nbsp; 2 景點 &nbsp;·&nbsp; 2 支影片</div>
+</div>
+
+<div class="summary">
+  <div class="summary-item"><span class="s-icon">🎬</span><span class="s-label">影片</span><span class="s-val">2 支</span></div>
+  <div class="summary-item"><span class="s-icon">🧁</span><span class="s-label">外帶點心</span><span class="s-val">2 組</span></div>
+  <div class="summary-item"><span class="s-icon">📍</span><span class="s-label">景點</span><span class="s-val">2 個</span></div>
+  <div class="summary-item"><span class="s-icon">🍜</span><span class="s-label">午餐</span><span class="s-val">3 選項</span></div>
+  <div class="summary-item"><span class="s-icon">🚗</span><span class="s-label">出發地</span><span class="s-val">紅樹林站</span></div>
+  <div class="summary-item"><span class="s-icon">🍦</span><span class="s-label">回程順路</span><span class="s-val">桂山冰棒</span></div>
+</div>
+
+<div class="season-banner">
+  <div class="season-title">🌿 夏季提醒（6～8月）</div>
+  <ul>
+    <li>🌡️ 烏來夏天涼爽，比台北市區低3～5度，山林拍攝舒適</li>
+    <li>🌊 夏季雨量充沛，內洞瀑布水量最大最壯觀，是最佳拍攝季節</li>
+    <li>💧 南勢溪夏天溪水清澈碧綠，吊橋溪谷背景最漂亮</li>
+    <li>⚠️ 午後易有雷陣雨，建議上午出發，下午拍攝完畢後回程</li>
+    <li>🍦 桂山電廠冰棒夏季（3～10月）正常營業，回程一定要停！</li>
+  </ul>
+</div>
+
+<div class="depart-box">
+  <div class="depart-title">🚗 出發資訊</div>
+  <div class="depart-grid">
+    <div>
+      <div class="depart-label">出發地點</div>
+      <div class="depart-val">紅樹林捷運站</div>
+    </div>
+    <div>
+      <div class="depart-label">建議出發時間</div>
+      <div class="depart-val">約 10:00（配合老街 10:00 開始營業）</div>
+    </div>
+    <div>
+      <div class="depart-label">紅樹林 → 烏來老街</div>
+      <div class="depart-val">約 45～50 分鐘（國道1號→北二高→新烏路）</div>
+    </div>
+    <div>
+      <div class="depart-label">老街 → 內洞森林</div>
+      <div class="depart-val">約 15 分鐘（信福路方向）</div>
+    </div>
+    <div>
+      <div class="depart-label">內洞 → 桂山電廠（回程）</div>
+      <div class="depart-val">約 25 分鐘（順路，不繞路）</div>
+    </div>
+    <div>
+      <div class="depart-label">停車場</div>
+      <div class="depart-val">烏來立體停車場（平日60元/次，步行1分鐘到老街）</div>
+    </div>
+  </div>
+  <div class="depart-note">💡 烏來老街店家約 10:00 陸續開始營業，抵達後先採買點心再安排午餐，下午進行拍攝。</div>
+</div>
+
+<div class="container">
+
+<!-- 行程順序 -->
+<div class="film-divider" style="margin-top:28px;"><span class="film-label">📋 今日行程順序</span></div>
+<div class="timeline-card">
+  <div class="timeline-row"><div class="timeline-time">10:00</div><div>🔵 紅樹林捷運站出發</div></div>
+  <div class="timeline-row"><div class="timeline-time">10:50</div><div>📍 抵達烏來老街，前往烏來立體停車場停車</div></div>
+  <div class="timeline-row"><div class="timeline-time">11:00</div><div>🧁 採買 <strong>點心A</strong>：高家冰溫泉蛋＋月球馬告山豬肉香腸</div></div>
+  <div class="timeline-row"><div class="timeline-time">11:15</div><div>🧁 採買 <strong>點心B</strong>：水芙蓉小米麻糬創始店</div></div>
+  <div class="timeline-row"><div class="timeline-time">11:30</div><div>🛍️ 順便買 <strong>烏來小米麻吉</strong>（帶回家用）</div></div>
+  <div class="timeline-row"><div class="timeline-time">11:45</div><div>🍜 午餐（三家擇一，快速解決）</div></div>
+  <div class="timeline-row"><div class="timeline-time">12:30</div><div>🎬 步行前往 <strong>烏來吊橋＋福德宮廣場</strong> 拍攝影片一</div></div>
+  <div class="timeline-row"><div class="timeline-time">14:00</div><div>🚗 開車前往 <strong>內洞國家森林遊樂區</strong>（車程約15分鐘）拍攝影片二</div></div>
+  <div class="timeline-row"><div class="timeline-time">15:30</div><div>🚗 回程，順路停 <strong>桂山電廠冰棒</strong>（⚠️ 17:00前到）</div></div>
+  <div class="timeline-row" style="color:var(--stone);font-size:12px;"><div class="timeline-time">16:30</div><div>🔵 返回紅樹林</div></div>
+</div>
+
+<!-- ===== 影片一 ===== -->
+<div class="film-divider"><span class="film-label">🎬 影片一｜溪谷吊橋漫食光</span></div>
+
+<!-- 採買 A -->
+<div class="section-title">
+  <div class="st-icon">🧁</div>
+  <h2>先採買點心 A</h2>
+  <span class="badge">⚠️ 先買才能去拍</span>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <span class="card-tag tag-food">🧁 外帶點心 A</span>
+    <div class="card-name">高家冰溫泉蛋＋月球馬告山豬肉香腸</div>
+    <div class="card-sub">搭配自備冰綠茶｜烏來老街兩大招牌，各買各的再組合拍攝</div>
+
+    <div style="margin-bottom:14px;">
+      <div style="font-size:13px;font-weight:500;color:var(--forest);margin-bottom:8px;">🥚 高家冰溫泉蛋（創始店）</div>
+      <div class="link-row">
+        <a href="https://maps.google.com/?q=高家冰溫泉蛋+新北市烏來區烏來街135號" target="_blank" class="link-btn btn-map">🗺️ Google Maps</a>
+        <a href="https://bobbytravel.tw/wulai/" target="_blank" class="link-btn btn-blog">📖 波比部落客推薦</a>
+      </div>
+      <div class="hours-box">
+        <div class="hours-title">⏰ 營業時間</div>
+        <div class="hours-row">🕐 每日 08:00 – 20:00（假日至21:00）</div>
+        <div class="hours-row"><span class="open-badge">✅ 全週無固定公休</span></div>
+      </div>
+      <div class="info-grid">
+        <div class="info-item"><div class="il">📌 地址</div><div class="iv">新北市烏來區烏來街135號</div></div>
+        <div class="info-item"><div class="il">📞 電話</div><div class="iv">02-2661-7458</div></div>
+        <div class="info-item"><div class="il">💰 價格</div><div class="iv">溫泉蛋15元/顆、酒蛋15元/顆、炸皮蛋60元/份</div></div>
+        <div class="info-item"><div class="il">⭐ 部落客推薦</div><div class="iv">溫泉蛋冰鎮後蛋黃濃郁半熟，炸皮蛋淋照燒醬超好拍</div></div>
+      </div>
+    </div>
+
+    <div>
+      <div style="font-size:13px;font-weight:500;color:var(--forest);margin-bottom:8px;">🌿 月球馬告山豬肉香腸</div>
+      <div class="link-row">
+        <a href="https://maps.google.com/?q=月球馬告山豬肉香腸+新北市烏來區烏來街145號" target="_blank" class="link-btn btn-map">🗺️ Google Maps</a>
+        <a href="https://www.kkday.com/zh-tw/blog/105064/asia-taiwan-wulai-old-street-food" target="_blank" class="link-btn btn-blog">📖 KKday推薦</a>
+      </div>
+      <div class="hours-box">
+        <div class="hours-title">⏰ 營業時間</div>
+        <div class="hours-row">🕐 平日 10:00 – 18:00｜假日 10:00 – 21:00</div>
+        <div class="hours-row"><span class="open-badge">✅ 全週無固定公休</span></div>
+      </div>
+      <div class="info-grid">
+        <div class="info-item"><div class="il">📌 地址</div><div class="iv">新北市烏來區烏來街145號</div></div>
+        <div class="info-item"><div class="il">📞 電話</div><div class="iv">0919-979-058</div></div>
+        <div class="info-item"><div class="il">💰 價格</div><div class="iv">原味45元、馬告45元、高粱酒45元</div></div>
+        <div class="info-item"><div class="il">⭐ 部落客推薦</div><div class="iv">馬告香氣特殊，現烤外脆內軟，原住民風格配溪谷最對味</div></div>
+      </div>
+    </div>
+
+    <div class="tips">
+      <div class="tips-title">採買建議</div>
+      <ul>
+        <li>兩樣一起買，組合搭配冰綠茶，當一組點心拍攝</li>
+        <li>溫泉蛋買幾顆擺在石板上拍特寫，顏色深沉好看</li>
+        <li>香腸請老闆串好讓你帶走，拍起來有份量感</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="connector">🚶 步行約5分鐘</div>
+
+<!-- 景點 A -->
+<div class="section-title">
+  <div class="st-icon">📍</div>
+  <h2>拍攝景點一</h2>
+</div>
+
+<div class="card">
+  <div class="spot-imgs">
+    <img src="https://lh3.googleusercontent.com/place-photos/AJRVUZOgJWn6xILBL5D0G4N9F6kq3g-T7VvxD4X2T7MTKrRHWHXYJJZ_ZHJPRHtfRRbxLGJJz-DhQlCM1EXi_5TuvD_dQXgvl7USwXS6XxoANz87WrdQ1wIo62ygGOQvF9PZK0XNJvv_QEKNlk4MBw=s800" alt="烏來吊橋" onerror="this.style.background='#C8DFD0';this.alt=''">
+    <img src="https://lh3.googleusercontent.com/place-photos/AJRVUZNj_vMDLpJsw2yJjdqpGK1Cze8zyH8ZBiYhZ7EsNhGMrYy4yYT4xkzRMHq3QBLnX_jdW-ygIMj7g39e7bz1r4Lq9X4D3JzVvJwNJrO2L9-hFGHq7rFnTCq_tFBE7zxrv6YAl7uPBdJd4SKOA=s800" alt="烏來吊橋2" onerror="this.style.background='#b0d0b8';this.alt=''">
+    <img src="https://lh3.googleusercontent.com/place-photos/AJRVUZPJQfpbM0V9k-EoOlHlX1LoF-hW0H7bCnq6ydR5q7VG27FHwbLqrn-wImhHnEHHZ3L8XE2FNyBgvz5NKp2bFiGmCBpz4QA0fInlEiJ97aXuGl7pHp_-lzBBpVFdI3m4lHlpE5cJuFMPaH5H3OM=s800" alt="福德宮廣場" onerror="this.style.background='#98c0a0';this.alt=''">
+  </div>
+  <div class="card-body">
+    <span class="card-tag tag-spot">📍 景點一</span>
+    <div class="card-name">烏來吊橋＋福德宮廣場</div>
+    <div class="card-sub">泰雅族圖騰紅色吊橋 ＋ 對岸廣場溪谷視野｜免費全天開放</div>
+
+    <div class="link-row">
+      <a href="https://maps.google.com/?q=烏來吊橋+新北市烏來區溫泉街35號" target="_blank" class="link-btn btn-map">🗺️ 烏來吊橋 Maps</a>
+      <a href="https://maps.google.com/?q=烏來福德宮+新北市烏來區" target="_blank" class="link-btn btn-map">🗺️ 福德宮 Maps</a>
+      <a href="https://www.yestome.com/page.php?f=uldc" target="_blank" class="link-btn btn-blog">📖 部落客介紹</a>
+    </div>
+
+    <div class="info-grid">
+      <div class="info-item"><div class="il">📌 吊橋地址</div><div class="iv">新北市烏來區溫泉街35號旁（客運總站隔壁）</div></div>
+      <div class="info-item"><div class="il">🚗 停車</div><div class="iv">烏來立體停車場（步行約3分鐘可達）</div></div>
+      <div class="info-item"><div class="il">⏰ 開放時間</div><div class="iv">全天 24 小時，免費</div></div>
+      <div class="info-item"><div class="il">🚶 福德宮廣場</div><div class="iv">走過吊橋到對岸，樓梯往上即達，有桌椅休憩空間</div></div>
+    </div>
+
+    <div class="must-shoot">
+      <div class="ms-title">📸 必拍角度 ＆ 必拍景</div>
+      <div class="ms-item"><div class="ms-num">1</div><div><strong>吊橋走動背影</strong>｜老闆手持點心走在紅色吊橋上，從橋頭側拍或從後方拍背影，泰雅族圖騰橋墩當框架，溪谷山林當背景，畫面最強</div></div>
+      <div class="ms-item"><div class="ms-num">2</div><div><strong>吊橋俯瞰溪谷</strong>｜站在橋上往下看，碧綠南勢溪＋兩岸山林，把點心放在橋欄杆上拍特寫</div></div>
+      <div class="ms-item"><div class="ms-num">3</div><div><strong>福德宮廣場擺拍</strong>｜走過吊橋到對岸，廣場有圓桌長椅，面向溪谷視野。把溫泉蛋、香腸擺在桌上，調製飲料，背景是山谷碧水，坐著休憩的自然感最好拍</div></div>
+      <div class="ms-item"><div class="ms-num">4</div><div><strong>廣場面向吊橋角度</strong>｜從廣場往吊橋方向拍，以橋和溪谷為背景，老闆在前景吃點心，有遠近層次感</div></div>
+    </div>
+
+    <div class="tips">
+      <div class="tips-title">拍攝注意</div>
+      <ul>
+        <li>福德宮廣場有鋼構屋頂遮蔭，夏天拍攝不怕日曬</li>
+        <li>廣場有水有廁所，長時間拍攝也方便</li>
+        <li>平日人少，可以慢慢拍，假日吊橋人潮較多</li>
+        <li>香腸趁熱拍，溫泉蛋冰涼帶出來不怕壞</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- 午餐 -->
+<div class="section-title">
+  <div class="st-icon">🍜</div>
+  <h2>午餐（快速擇一）</h2>
+</div>
+
+<div class="lunch-grid">
+  <div class="lunch-card">
+    <span class="lunch-tag">選項 A</span>
+    <div class="lunch-name">祥春麵攤</div>
+    <div class="lunch-desc">烏來在地麵店，平價快速，黑豬肉料理為主</div>
+    <div class="lunch-info">
+      <div>📌 新北市烏來區溫泉街80號</div>
+      <div>📞 0953-027-915</div>
+      <div>⏰ 全天營業至凌晨01:00</div>
+      <div><span class="open-badge" style="font-size:10px;">✅ 無固定公休</span></div>
+      <div style="margin-top:6px;"><a href="https://maps.google.com/?q=祥春麵攤+新北市烏來區溫泉街80號" target="_blank" style="color:var(--river);font-size:11px;text-decoration:none;">🗺️ Google Maps</a></div>
+    </div>
+  </div>
+  <div class="lunch-card">
+    <span class="lunch-tag">選項 B</span>
+    <div class="lunch-name">阿春美食</div>
+    <div class="lunch-desc">食尚玩家推薦，炒山豬肉、竹筒飯、野菜，快速上桌</div>
+    <div class="lunch-info">
+      <div>📌 新北市烏來區烏來街109號</div>
+      <div>📞 02-2661-7718</div>
+      <div>⏰ 11:00 – 20:00</div>
+      <div><span class="closed-badge" style="font-size:10px;">⛔ 週四公休</span></div>
+      <div style="margin-top:6px;"><a href="https://maps.google.com/?q=阿春美食+新北市烏來區烏來街109號" target="_blank" style="color:var(--river);font-size:11px;text-decoration:none;">🗺️ Google Maps</a>&nbsp;&nbsp;<a href="https://bobbytravel.tw/wulai/" target="_blank" style="color:#E65100;font-size:11px;text-decoration:none;">📖 波比推薦</a></div>
+    </div>
+  </div>
+  <div class="lunch-card">
+    <span class="lunch-tag">選項 C</span>
+    <div class="lunch-name">尋龍記</div>
+    <div class="lunch-desc">Google評分4.9高分，白斬魚、溪蝦料理，只收現金</div>
+    <div class="lunch-info">
+      <div>📌 新北市烏來區溫泉街86巷16號</div>
+      <div>⏰ 平日至 20:30</div>
+      <div>💳 只收現金</div>
+      <div>🐕 允許帶狗進戶外區域</div>
+      <div style="margin-top:6px;"><a href="https://maps.google.com/?q=尋龍記+新北市烏來區溫泉街86巷16號" target="_blank" style="color:var(--river);font-size:11px;text-decoration:none;">🗺️ Google Maps</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- 採買 B -->
+<div class="section-title">
+  <div class="st-icon">🧁</div>
+  <h2>先採買點心 B</h2>
+  <span class="badge">⚠️ 先買才能去拍</span>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <span class="card-tag tag-food">🧁 外帶點心 B</span>
+    <div class="card-name">水芙蓉小米麻糬創始店</div>
+    <div class="card-sub">烏來現烤小米麻糬創始店｜外酥內軟，口味多元，耐放好攜帶</div>
+
+    <div class="link-row">
+      <a href="https://maps.google.com/?q=水芙蓉小米麻糬+新北市烏來區烏來街10號" target="_blank" class="link-btn btn-map">🗺️ Google Maps</a>
+      <a href="https://bobbytravel.tw/wulai/" target="_blank" class="link-btn btn-blog">📖 波比推薦</a>
+      <a href="https://kenalice.tw/blog/post/wulai-old-street" target="_blank" class="link-btn btn-blog">📖 Alice推薦</a>
+    </div>
+
+    <div class="hours-box">
+      <div class="hours-title">⏰ 營業時間 ＆ 公休日</div>
+      <div class="hours-row">🕐 平日 09:00 – 17:00</div>
+      <div class="hours-row"><span class="closed-badge">⛔ 週二、週四公休</span>&nbsp;請避開這兩天出發</div>
+      <div class="hours-row"><span class="open-badge">✅ 週一、三、五、六、日 正常營業</span></div>
+    </div>
+
+    <div class="info-grid">
+      <div class="info-item"><div class="il">📌 地址</div><div class="iv">新北市烏來區烏來街10號</div></div>
+      <div class="info-item"><div class="il">📞 電話</div><div class="iv">02-2661-6055</div></div>
+      <div class="info-item"><div class="il">💰 口味</div><div class="iv">黑糖、煉乳、紅豆、巧克力、起司、昭和海苔、韓式辣醬等</div></div>
+      <div class="info-item"><div class="il">✅ 外帶</div><div class="iv">麻糬耐放，帶去內洞完全沒問題</div></div>
+    </div>
+
+    <div class="tips">
+      <div class="tips-title">採買建議</div>
+      <ul>
+        <li>選2～3種口味，拍攝時可以有不同組合</li>
+        <li>金黃色麻糬搭配內洞綠色蕨類背景，對比鮮明好看</li>
+        <li>買完放進袋子，帶到內洞再拿出來拍，新鮮度OK</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- 加購帶回家 -->
+<div class="bonus-card">
+  <span class="card-tag tag-bonus">🛍️ 順便採買帶回家</span>
+  <div class="card-name" style="margin-top:6px;">烏來小米麻吉</div>
+  <div style="font-size:12px;color:var(--stone);margin-bottom:10px;">手工現包，芝麻、花生、紅豆、芋頭四種口味，一盒12顆120元，性價比超高</div>
+  <div class="link-row">
+    <a href="https://maps.google.com/?q=烏來小米麻吉+新北市烏來區烏來街79號對面" target="_blank" class="link-btn btn-map">🗺️ Google Maps</a>
+  </div>
+  <div style="font-size:12px;color:var(--text);">📌 新北市烏來區烏來街79號對面（全家便利商店對面）｜⏰ 平日 10:00 – 17:30｜❄️ 室溫保存一天，建議當日吃完或冷凍保存14天</div>
+</div>
+
+<!-- ===== 影片二 ===== -->
+<div class="film-divider"><span class="film-label">🎬 影片二｜內洞瀑布漫食光</span></div>
+
+<div class="connector">🚗 開車約 15 分鐘 → 沿信福路往內洞方向</div>
+
+<!-- 景點 B -->
+<div class="section-title">
+  <div class="st-icon">📍</div>
+  <h2>拍攝景點二</h2>
+</div>
+
+<div class="card">
+  <div class="spot-imgs">
+    <img src="https://lh3.googleusercontent.com/place-photos/AJRVUZNpJiYSFb5DThD7Q2-TdxjUH2CYHkBt8N8Ew2YVnWiZ_g4cSn6Bgh3eXWV_Fmz8_kS8MHTPMuiNjHHqNVXCU6X0VuHlg_1e4kPFV53rwM5gBO-qI4qaTVYJpg1KLQRV6bJYJxFSfBPEBYkrGY=s800" alt="內洞森林" onerror="this.style.background='#C8DFD0';this.alt=''">
+    <img src="https://lh3.googleusercontent.com/place-photos/AJRVUZNMj5qmZt9f1FU1D-bqx_RGkyDCgUj4VWqpDL0TgHYPeP5VvBcQjx0-H4U1uCJF8_6TJ7LkNcZ2Kpqfd_JjK4qdpMNKFDpq3Mk3O2KwZ14FmvI7Zq1Y_7LnhF7xBHdnPx8ZLpWmh07Xd93WA=s800" alt="內洞瀑布" onerror="this.style.background='#b0d0b8';this.alt=''">
+    <img src="https://lh3.googleusercontent.com/place-photos/AJRVUZMpMkpVJfLT-xZx5KnVZ0LOsMTaQWQHBi0nBN5HKmKJj1mXxUJLmq7AaRnxKf5GZvl0bIa5eEeI5q74YS7kQCd9dQtBV2PUEZIFDtqEdANHfXl4DhNpJP7g0r7lqjnF8A6vvlXwjdI0bkSXGM=s800" alt="內洞溪流" onerror="this.style.background='#98c0a0';this.alt=''">
+  </div>
+  <div class="card-body">
+    <span class="card-tag tag-spot">📍 景點二</span>
+    <div class="card-name">內洞國家森林遊樂區</div>
+    <div class="card-sub">台灣最美三層瀑布｜碧綠溪流｜負離子滿滿的夏日秘境</div>
+
+    <div class="link-row">
+      <a href="https://maps.google.com/?q=內洞國家森林遊樂區+新北市烏來區" target="_blank" class="link-btn btn-map">🗺️ Google Maps</a>
+      <a href="https://bobbytravel.tw/wulai/" target="_blank" class="link-btn btn-blog">📖 波比推薦</a>
+    </div>
+
+    <div class="info-grid">
+      <div class="info-item"><div class="il">📌 地址</div><div class="iv">新北市烏來區信福路（娃娃谷）</div></div>
+      <div class="info-item"><div class="il">🚗 停車</div><div class="iv">園區內停車場，免費，空間充足</div></div>
+      <div class="info-item"><div class="il">⏰ 開放時間</div><div class="iv">平日 08:00–17:00｜假日 07:00–17:00</div></div>
+      <div class="info-item"><div class="il">💰 門票</div><div class="iv">全票100元，65歲以上/學生 50元</div></div>
+    </div>
+
+    <div class="must-shoot">
+      <div class="ms-title">📸 必拍角度 ＆ 必拍景</div>
+      <div class="ms-item"><div class="ms-num">1</div><div><strong>溪邊大石頭擺拍</strong>｜把麻糬放在溪邊大石頭上，低角度拍，背景是碧綠溪水和蕨類，色彩最豐富，這是最強畫面</div></div>
+      <div class="ms-item"><div class="ms-num">2</div><div><strong>步道木棧橋</strong>｜老闆站在步道木橋上，手持麻糬，背景是三層瀑布，拍背影或側身</div></div>
+      <div class="ms-item"><div class="ms-num">3</div><div><strong>觀瀑平台擺拍</strong>｜步道終點的觀瀑平台，護欄旁放點心，以瀑布為背景拍特寫，水氣飄飄很有仙氣</div></div>
+      <div class="ms-item"><div class="ms-num">4</div><div><strong>蕨類叢林走動</strong>｜步道兩旁有65種蕨類，老闆走在林蔭步道中，光影斑駁，充滿山林感</div></div>
+    </div>
+
+    <div class="tips">
+      <div class="tips-title">拍攝注意</div>
+      <ul>
+        <li>夏天水量最大，瀑布最壯觀，是最佳拍攝季節</li>
+        <li>步道全程林蔭遮蔽，夏天不怕日曬，非常涼爽</li>
+        <li>觀瀑步道來回約30分鐘，石頭濕滑要注意腳步</li>
+        <li>溪邊大石頭找平整的，才能穩定放置道具</li>
+      </ul>
+    </div>
+
+    <div class="warn-box">⚠️ 假日人潮較多，建議平日前往，石頭好佔位</div>
+  </div>
+</div>
+
+<!-- 回程加碼 -->
+<div class="film-divider"><span class="film-label">🍦 回程順路加碼</span></div>
+
+<div class="card">
+  <div class="card-body">
+    <span class="card-tag tag-bonus">🍦 回程順路｜選擇性</span>
+    <div class="card-name">桂山發電廠冰品部</div>
+    <div class="card-sub">台電古早味枝仔冰｜最便宜清冰8元｜回程新烏路上順路停｜夏季必訪</div>
+
+    <div class="link-row">
+      <a href="https://maps.google.com/?q=桂山發電廠冰品部+新北市新店區桂山路34號" target="_blank" class="link-btn btn-map">🗺️ Google Maps</a>
+      <a href="https://www.facebook.com/profile.php?id=100057049574413" target="_blank" class="link-btn btn-fb">📢 FB粉絲團（確認庫存）</a>
+      <a href="https://bobbytravel.tw/guishan-ice/" target="_blank" class="link-btn btn-blog">📖 波比推薦</a>
+    </div>
+
+    <div class="hours-box">
+      <div class="hours-title">⏰ 營業時間 ＆ 季節</div>
+      <div class="hours-row">🗓️ 每年約 <strong>3月～10月</strong> 期間限定販賣</div>
+      <div class="hours-row">🕐 平日 08:30 – 17:00｜週六日 09:00 – 18:00</div>
+      <div class="hours-row"><span class="closed-badge">⛔ 賣完即止，下午常售罄！</span>&nbsp;建議16:30前到</div>
+    </div>
+
+    <div class="info-grid">
+      <div class="info-item"><div class="il">📌 地址</div><div class="iv">新北市新店區桂山路34號</div></div>
+      <div class="info-item"><div class="il">💰 價格</div><div class="iv">清冰8元、其他口味12元（2025年價格）</div></div>
+      <div class="info-item"><div class="il">🍦 推薦口味</div><div class="iv">芋頭、米糕、花生、百香果（波比激推前四名）</div></div>
+      <div class="info-item"><div class="il">🚗 停車</div><div class="iv">園區內免費停車場，空間大</div></div>
+    </div>
+
+    <div class="tips">
+      <div class="tips-title">注意事項</div>
+      <ul>
+        <li>出發前先查 FB 粉絲團確認當日庫存，有時會提早售罄</li>
+        <li>人多需抽號碼牌，先填好口味數量單再排隊</li>
+        <li>可多買幾支帶回家，放冷凍可保存</li>
+        <li>從內洞回程走新烏路，看到桂山路指標左轉即可到達</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- 出發前清單 -->
+<div class="section-title">
+  <div class="st-icon">📋</div>
+  <h2>出發前確認清單</h2>
+</div>
+<div class="checklist">
+  <ul>
+    <li>📅 <div><strong>確認星期幾出發</strong>｜水芙蓉麻糬週二、週四公休；阿春美食週四公休。建議<strong>週一、三、五</strong>出發最保險</div></li>
+    <li>💳 <div><strong>尋龍記只收現金</strong>｜若選擇尋龍記吃午餐，記得準備現金</div></li>
+    <li>🎫 <div><strong>內洞門票</strong>｜全票100元，可現場購買，有停車場免費</div></li>
+    <li>🍦 <div><strong>桂山冰棒FB確認</strong>｜出發前看 FB 粉絲團確認當日是否有賣＆庫存</div></li>
+    <li>⏰ <div><strong>回程時間掌控</strong>｜桂山冰棒17:00關門，內洞拍完要趕在16:30前到</div></li>
+    <li>🌧️ <div><strong>雨天備案</strong>｜烏來山區午後易有雷陣雨，備傘。吊橋福德宮有鋼構屋頂，下雨也能拍</div></li>
+    <li>🅿️ <div><strong>停車</strong>｜烏來立體停車場平日60元/次，假日計時，位置充足</div></li>
+  </ul>
+</div>
+
+</div>
+<footer>漫食光拍攝計劃 ｜ 烏來山林 ｜ masa_cookingram</footer>
+</body>
+</html>
