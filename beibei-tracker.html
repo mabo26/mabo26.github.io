@@ -135,7 +135,7 @@ function getItems(){
   const all=[
     ...state.deposits.map(d=>({...d,_type:'deposit',_date:d.date})),
     ...state.purchases.map(p=>({...p,_type:'purchase',_date:p.date})),
-  ].sort((a,b)=>new Date(a._date)-new Date(b._date));
+  ].sort((a,b)=>new Date(b._date)-new Date(a._date));
   if(currentTab==='deposit') return all.filter(i=>i._type==='deposit');
   if(currentTab==='purchase') return all.filter(i=>i._type==='purchase');
   if(currentTab==='received') return all.filter(i=>i._type==='purchase'&&i.received);
