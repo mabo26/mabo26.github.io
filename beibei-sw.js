@@ -1,4 +1,4 @@
-const CACHE = 'beibei-202607161419';
+const CACHE = 'beibei-202607200306';
 
 self.addEventListener('install', e => {
   self.skipWaiting();
