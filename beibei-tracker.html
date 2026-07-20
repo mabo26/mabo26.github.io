@@ -108,8 +108,24 @@ const DEFAULT_PURCHASES = [
 ];
 
 function loadData() {
-  try { const r=localStorage.getItem(STORAGE_KEY); if(r) return JSON.parse(r); } catch(e){}
-  return {deposits:DEFAULT_DEPOSITS,purchases:DEFAULT_PURCHASES};
+  let saved=null;
+  try { const r=localStorage.getItem(STORAGE_KEY); if(r) saved=JSON.parse(r); } catch(e){}
+  if(!saved) return {deposits:DEFAULT_DEPOSITS,purchases:DEFAULT_PURCHASES};
+
+  const pMap=new Map((saved.purchases||[]).map(p=>[p.id,p]));
+  const defaultPIds=new Set(DEFAULT_PURCHASES.map(p=>p.id));
+  const purchases=DEFAULT_PURCHASES.map(p=>{
+    const s=pMap.get(p.id);
+    return s?{...p,settled:s.settled,received:s.received}:p;
+  });
+  (saved.purchases||[]).forEach(p=>{ if(!defaultPIds.has(p.id)) purchases.push(p); });
+
+  const dMap=new Map((saved.deposits||[]).map(d=>[d.id,d]));
+  const defaultDIds=new Set(DEFAULT_DEPOSITS.map(d=>d.id));
+  const deposits=DEFAULT_DEPOSITS.map(d=> dMap.get(d.id) || d);
+  (saved.deposits||[]).forEach(d=>{ if(!defaultDIds.has(d.id)) deposits.push(d); });
+
+  return {deposits,purchases};
 }
 function saveData() { try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state));}catch(e){} }
 
