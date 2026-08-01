@@ -3,7 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="小說替換器">
 <title>小說名字替換器</title>
+<link rel="apple-touch-icon" href="data:image/png;base64,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">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -110,8 +114,6 @@
   .arrow-small { color: var(--gold); font-size: 1rem; text-align: center; }
   .btn-remove { background: none; border: none; color: #c4607a; cursor: pointer; font-size: 1rem; padding: 0 0.2rem; opacity: 0.6; transition: opacity 0.2s; }
   .btn-remove:hover { opacity: 1; }
-
-  /* ── TXT Upload Zone ── */
   .upload-zone {
     border: 2px dashed rgba(184,134,11,0.4);
     border-radius: 4px;
@@ -151,8 +153,6 @@
   .file-size { font-size: 0.78rem; color: #a08060; }
   .btn-clear-file { background: none; border: none; color: #c4607a; cursor: pointer; font-size: 0.8rem; opacity: 0.7; transition: opacity 0.2s; }
   .btn-clear-file:hover { opacity: 1; }
-
-  /* divider */
   .or-divider {
     display: flex; align-items: center; gap: 0.8rem;
     margin-bottom: 1rem; color: #a08060; font-size: 0.8rem;
@@ -160,7 +160,6 @@
   .or-divider::before, .or-divider::after {
     content: ''; flex: 1; height: 1px; background: rgba(184,134,11,0.2);
   }
-
   textarea {
     font-family: 'Noto Serif TC', serif; font-size: 0.9rem; line-height: 1.9;
     width: 100%; min-height: 160px; padding: 1rem;
@@ -169,7 +168,6 @@
   }
   textarea:focus { outline: none; border-color: var(--rose); box-shadow: 0 0 0 3px rgba(139,58,82,0.1); }
   .empty-hint { font-size: 0.82rem; color: #a08060; font-style: italic; margin-top: 0.6rem; }
-
   .btn-main {
     font-family: 'Noto Serif TC', serif; font-size: 1rem; font-weight: 500;
     padding: 0.9rem 2.5rem;
@@ -181,7 +179,6 @@
   }
   .btn-main:hover { background: linear-gradient(135deg, var(--rose-light), var(--rose)); box-shadow: 0 5px 18px rgba(139,58,82,0.4); transform: translateY(-1px); }
   .btn-main:active { transform: translateY(0); }
-
   .result-section { display: none; }
   .result-section.visible { display: block; animation: fadeSlide 0.3s ease; }
   .result-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem; flex-wrap: wrap; gap: 0.5rem; }
@@ -210,8 +207,6 @@
     max-height: 420px; overflow-y: auto; color: var(--ink);
   }
   .result-text mark { background: rgba(196,96,122,0.2); color: var(--rose); border-radius: 2px; padding: 0 2px; font-weight: 500; }
-
-  /* ── Name Scanner ── */
   .scan-section { display: none; margin-top: 1rem; animation: fadeSlide 0.3s ease; }
   .scan-section.visible { display: block; }
   .scan-title { font-size: 0.82rem; color: #7a6352; margin-bottom: 0.6rem; letter-spacing: 0.05em; }
@@ -244,8 +239,6 @@
     <h1>小說名字<span>替換器</span></h1>
     <p class="subtitle">將故事裡的名字，換成你心裡那個人的名字</p>
   </header>
-
-  <!-- 名字設定 -->
   <div class="card">
     <div class="card-title"><span>✎</span> 設定替換名字</div>
     <div class="names-row">
@@ -263,31 +256,20 @@
     <div style="margin-top:1rem;">
       <button class="btn-add" onclick="addPair()">＋ 新增更多名字</button>
     </div>
-
-    <!-- 自動偵測人名結果 -->
     <div id="scan-section" class="scan-section">
       <div class="scan-title">📊 偵測到的人名（點擊自動填入）</div>
       <div class="name-chips" id="name-chips"></div>
       <p class="scan-hint">點名字填入「原本名字」欄，再填右側「替換成」的名字</p>
     </div>
   </div>
-
-  <!-- 小說輸入 -->
   <div class="card">
     <div class="card-title"><span>📖</span> 匯入小說文字</div>
-
-    <!-- 上傳區 -->
-    <div class="upload-zone" id="upload-zone"
-         ondragover="handleDragOver(event)"
-         ondragleave="handleDragLeave(event)"
-         ondrop="handleDrop(event)">
+    <div class="upload-zone" id="upload-zone" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event)">
       <input type="file" accept=".txt" onchange="handleFileSelect(event)">
       <div class="upload-icon">📂</div>
       <div class="upload-label">點擊選擇 <strong>.txt 檔案</strong>，或直接拖曳到這裡</div>
       <div class="upload-hint">自動偵測編碼，或手動選擇</div>
     </div>
-
-    <!-- 編碼選擇器 -->
     <div style="display:flex;align-items:center;gap:0.7rem;margin-top:0.8rem;flex-wrap:wrap;">
       <label style="font-size:0.8rem;color:#7a6352;white-space:nowrap;">📝 編碼：</label>
       <select id="encoding-select" style="font-family:'Noto Serif TC',serif;font-size:0.82rem;padding:0.35rem 0.7rem;border:1px solid rgba(184,134,11,0.3);border-radius:3px;background:white;color:#1a1008;cursor:pointer;">
@@ -305,26 +287,19 @@
       </select>
       <span id="encoding-detected" style="font-size:0.78rem;color:#c4607a;display:none;"></span>
     </div>
-
-    <!-- 已載入檔案狀態 -->
     <div class="file-loaded" id="file-loaded" style="margin-top:0.8rem;">
       <span>📄</span>
       <span class="file-name" id="file-name"></span>
       <span class="file-size" id="file-size"></span>
       <button class="btn-clear-file" onclick="clearFile()">✕ 清除</button>
     </div>
-
     <button class="btn-scan" id="btn-scan" onclick="scanNames()" style="width:100%;margin-bottom:0.8rem;">🔍 自動偵測人名</button>
     <div class="or-divider">或者手動貼上文字</div>
-
-    <textarea id="novel-input" placeholder="把小說段落貼在這裡…&#10;&#10;上傳 .txt 後文字會自動填入，也可以直接在這裡貼上內容。"></textarea>
+    <textarea id="novel-input" placeholder="把小說段落貼在這裡…"></textarea>
     <p class="empty-hint">支援一次替換多個名字 · 替換完成可直接下載為 .txt 檔案</p>
   </div>
-
   <button class="btn-main" onclick="doReplace()">✦ 開始替換 ✦</button>
-
   <div class="ornament" style="margin: 1.5rem 0;">· · ·</div>
-
   <div class="result-section" id="result-section">
     <div class="card">
       <div class="result-header">
@@ -339,47 +314,22 @@
     </div>
   </div>
 </div>
-
 <script>
   let pairCount = 1;
-
-  // 預設名字組合
-  const defaultTos = ["肖戰", "王一博", "王", "一博", "肖", "戰"];
-
   window.addEventListener('DOMContentLoaded', () => {
-    // 第一組右側
     document.getElementById('to-0').value = '王一博';
-    // 其餘組只填右側
     const restTos = ["肖戰", "王", "一博", "肖", "戰"];
-    restTos.forEach(to => {
-      addPair();
-      const id = pairCount - 1;
-      document.getElementById('to-' + id).value = to;
-    });
+    restTos.forEach(to => { addPair(); const id = pairCount - 1; document.getElementById('to-' + id).value = to; });
   });
   let currentFileName = '替換結果.txt';
-
-  // ── 名字欄位 ──
   function addPair() {
     const container = document.getElementById('extra-pairs');
     const div = document.createElement('div');
-    div.className = 'extra-pair';
-    div.id = 'pair-' + pairCount;
-    div.innerHTML = `
-      <input type="text" id="from-${pairCount}" placeholder="原本名字">
-      <span class="arrow-small">→</span>
-      <input type="text" id="to-${pairCount}" placeholder="替換成">
-      <button class="btn-remove" onclick="removePair(${pairCount})" title="刪除">✕</button>
-    `;
-    container.appendChild(div);
-    pairCount++;
+    div.className = 'extra-pair'; div.id = 'pair-' + pairCount;
+    div.innerHTML = `<input type="text" id="from-${pairCount}" placeholder="原本名字"><span class="arrow-small">→</span><input type="text" id="to-${pairCount}" placeholder="替換成"><button class="btn-remove" onclick="removePair(${pairCount})" title="刪除">✕</button>`;
+    container.appendChild(div); pairCount++;
   }
-
-  function removePair(id) {
-    const el = document.getElementById('pair-' + id);
-    if (el) el.remove();
-  }
-
+  function removePair(id) { const el = document.getElementById('pair-' + id); if (el) el.remove(); }
   function getPairs() {
     const pairs = [];
     const from0 = document.getElementById('from-0').value.trim();
@@ -393,263 +343,108 @@
     });
     return pairs;
   }
-
-  // ── 檔案上傳 ──
-  function handleDragOver(e) {
-    e.preventDefault();
-    document.getElementById('upload-zone').classList.add('dragover');
-  }
-  function handleDragLeave(e) {
-    document.getElementById('upload-zone').classList.remove('dragover');
-  }
-  function handleDrop(e) {
-    e.preventDefault();
-    document.getElementById('upload-zone').classList.remove('dragover');
-    const file = e.dataTransfer.files[0];
-    if (file) loadFile(file);
-  }
-  function handleFileSelect(e) {
-    const file = e.target.files[0];
-    if (file) loadFile(file);
-  }
-
+  function handleDragOver(e) { e.preventDefault(); document.getElementById('upload-zone').classList.add('dragover'); }
+  function handleDragLeave(e) { document.getElementById('upload-zone').classList.remove('dragover'); }
+  function handleDrop(e) { e.preventDefault(); document.getElementById('upload-zone').classList.remove('dragover'); const file = e.dataTransfer.files[0]; if (file) loadFile(file); }
+  function handleFileSelect(e) { const file = e.target.files[0]; if (file) loadFile(file); }
   function loadFile(file) {
-    if (!file.name.endsWith('.txt')) {
-      alert('請選擇 .txt 格式的檔案！');
-      return;
-    }
+    if (!file.name.endsWith('.txt')) { alert('請選擇 .txt 格式的檔案！'); return; }
     currentFileName = file.name.replace('.txt', '') + '_替換版.txt';
-
     const selectedEncoding = document.getElementById('encoding-select').value;
     const detectedEl = document.getElementById('encoding-detected');
-
     if (selectedEncoding === 'auto') {
-      const encodingQueue = ['UTF-8', 'GB18030', 'Big5', 'GBK', 'Shift_JIS', 'EUC-JP', 'EUC-KR', 'Windows-1252', 'ISO-8859-1'];
-      tryEncodings(file, encodingQueue, 0, detectedEl);
+      tryEncodings(file, ['UTF-8','GB18030','Big5','GBK','Shift_JIS','EUC-JP','EUC-KR','Windows-1252','ISO-8859-1'], 0, detectedEl);
     } else {
       const reader = new FileReader();
       reader.onload = function(e) {
         const text = e.target.result;
-        if (text.includes('�')) {
-          detectedEl.textContent = '⚠️ 用 ' + selectedEncoding + ' 讀取仍有亂碼，請嘗試其他編碼';
-          detectedEl.style.color = '#c44';
-          detectedEl.style.display = 'inline';
-        } else {
-          detectedEl.textContent = '✓ 已用 ' + selectedEncoding + ' 讀取';
-          detectedEl.style.color = '#8b3a52';
-          detectedEl.style.display = 'inline';
-        }
+        detectedEl.textContent = text.includes('?') ? '⚠️ 用 ' + selectedEncoding + ' 讀取仍有亂碼' : '✓ 已用 ' + selectedEncoding + ' 讀取';
+        detectedEl.style.color = text.includes('?') ? '#c44' : '#8b3a52';
+        detectedEl.style.display = 'inline';
         document.getElementById('novel-input').value = text;
       };
       reader.readAsText(file, selectedEncoding);
     }
-
     const sizeKB = (file.size / 1024).toFixed(1);
-    const sizeMB = file.size > 1024*1024 ? (file.size/1024/1024).toFixed(2) + ' MB' : sizeKB + ' KB';
     document.getElementById('file-name').textContent = file.name;
-    document.getElementById('file-size').textContent = sizeMB;
+    document.getElementById('file-size').textContent = file.size > 1024*1024 ? (file.size/1024/1024).toFixed(2) + ' MB' : sizeKB + ' KB';
     document.getElementById('file-loaded').classList.add('visible');
   }
-
   function tryEncodings(file, queue, index, detectedEl) {
-    if (index >= queue.length) {
-      detectedEl.textContent = '⚠️ 無法自動偵測，請手動選擇編碼';
-      detectedEl.style.color = '#c44';
-      detectedEl.style.display = 'inline';
-      return;
-    }
+    if (index >= queue.length) { detectedEl.textContent = '⚠️ 無法自動偵測'; detectedEl.style.color = '#c44'; detectedEl.style.display = 'inline'; return; }
     const enc = queue[index];
     const reader = new FileReader();
     reader.onload = function(e) {
       const text = e.target.result;
-      if (!text.includes('�')) {
+      if (!text.includes('?')) {
         document.getElementById('novel-input').value = text;
         document.getElementById('btn-scan').style.display = 'inline-block';
-        detectedEl.textContent = '✓ 自動偵測為 ' + enc;
-        detectedEl.style.color = '#8b3a52';
-        detectedEl.style.display = 'inline';
+        detectedEl.textContent = '✓ 自動偵測為 ' + enc; detectedEl.style.color = '#8b3a52'; detectedEl.style.display = 'inline';
         document.getElementById('encoding-select').value = enc;
-      } else {
-        tryEncodings(file, queue, index + 1, detectedEl);
-      }
+      } else { tryEncodings(file, queue, index + 1, detectedEl); }
     };
     reader.readAsText(file, enc);
   }
-
-
-  // ── 名字掃描 ──
   function scanNames() {
     const text = document.getElementById('novel-input').value;
     if (!text.trim()) { alert('請先上傳小說！'); return; }
-
-    // 用 regex 找2-4字的中文詞組，統計出現次數
     const counts = {};
-    // 2字名
-    const matches2 = text.match(/[一-鿿]{2}/g) || [];
-    // 3字名
-    const matches3 = text.match(/[一-鿿]{3}/g) || [];
-    // 4字名
-    const matches4 = text.match(/[一-鿿]{4}/g) || [];
-
-    [...matches2, ...matches3, ...matches4].forEach(w => {
-      counts[w] = (counts[w] || 0) + 1;
-    });
-
-    // 過濾：出現20次以上，排除常見詞
+    [...(text.match(/[一-鿿]{2}/g)||[]),...(text.match(/[一-鿿]{3}/g)||[]),...(text.match(/[一-鿿]{4}/g)||[])].forEach(w => { counts[w] = (counts[w]||0)+1; });
     const stopWords = new Set(['什麼','為什麼','這樣','那樣','一個','一些','沒有','所有','因為','所以','但是','然後','如果','雖然','已經','可以','不是','還是','只是','看著','說道','這個','那個','一直','自己','知道','覺得','時候','出來','回來','過來','進來','下去','上去','走去','想到','想起','看到','聽到','感覺','開始','繼續','結束','不知','不會','不要','不能','不行','沒想','沒有','現在','之前','之後','突然','終於','原來','其實','只有','而且','並且','或者','雖然','即使','無論','不管','怎麼','怎樣','哪裡','哪個','什麼','這裡','那裡','一起','一下','一點','一樣','一定','一般','一切','一次','告訴','看見','想著','說著','走著','做著']);
-
-    const filtered = Object.entries(counts)
-      .filter(([w, c]) => c >= 20 && !stopWords.has(w))
-      .sort((a, b) => b[1] - a[1])
-      .slice(0, 20);
-
+    const filtered = Object.entries(counts).filter(([w,c])=>c>=20&&!stopWords.has(w)).sort((a,b)=>b[1]-a[1]).slice(0,20);
     const container = document.getElementById('name-chips');
     container.innerHTML = '';
-
-    if (filtered.length === 0) {
-      container.innerHTML = '<span style="font-size:0.82rem;color:#a08060;">未找到高頻名字，請手動輸入</span>';
-    } else {
-      filtered.forEach(([name, count]) => {
-        const chip = document.createElement('button');
-        chip.className = 'name-chip';
-        chip.innerHTML = name + ' <span class="chip-count">×' + count + '</span>';
-        chip.onclick = () => fillName(name, chip);
-        container.appendChild(chip);
-      });
-    }
-
+    if (filtered.length===0) { container.innerHTML='<span style="font-size:0.82rem;color:#a08060;">未找到高頻名字，請手動輸入</span>'; }
+    else { filtered.forEach(([name,count])=>{ const chip=document.createElement('button'); chip.className='name-chip'; chip.innerHTML=name+' <span class="chip-count">×'+count+'</span>'; chip.onclick=()=>fillName(name,chip); container.appendChild(chip); }); }
     document.getElementById('scan-section').classList.add('visible');
   }
-
   let fillCount = 0;
   function fillName(name, chip) {
-    // 找第一個空的「from」輸入框
     const allFroms = [document.getElementById('from-0')];
-    document.querySelectorAll('.extra-pair').forEach(el => {
-      const id = el.id.replace('pair-', '');
-      const inp = document.getElementById('from-' + id);
-      if (inp) allFroms.push(inp);
-    });
-
-    // 如果已選，取消選取並清空
-    if (chip.classList.contains('selected')) {
-      chip.classList.remove('selected');
-      allFroms.forEach(inp => { if (inp.value === name) inp.value = ''; });
-      return;
-    }
-
-    // 找第一個空的輸入框填入
+    document.querySelectorAll('.extra-pair').forEach(el=>{ const id=el.id.replace('pair-',''); const inp=document.getElementById('from-'+id); if(inp) allFroms.push(inp); });
+    if (chip.classList.contains('selected')) { chip.classList.remove('selected'); allFroms.forEach(inp=>{if(inp.value===name)inp.value='';}); return; }
     let filled = false;
-    for (const inp of allFroms) {
-      if (!inp.value.trim()) {
-        inp.value = name;
-        filled = true;
-        break;
-      }
-    }
-
-    // 如果沒有空的，自動新增一組
-    if (!filled) {
-      addPair();
-      setTimeout(() => {
-        const newId = pairCount - 1;
-        const newInp = document.getElementById('from-' + newId);
-        if (newInp) newInp.value = name;
-      }, 50);
-    }
-
+    for (const inp of allFroms) { if (!inp.value.trim()) { inp.value=name; filled=true; break; } }
+    if (!filled) { addPair(); setTimeout(()=>{ const newInp=document.getElementById('from-'+(pairCount-1)); if(newInp) newInp.value=name; },50); }
     chip.classList.add('selected');
   }
-
   function clearFile() {
-    document.getElementById('novel-input').value = '';
-    document.getElementById('btn-scan').style.display = 'none';
-    document.getElementById('scan-section').classList.remove('visible');
-    document.getElementById('name-chips').innerHTML = '';
-    document.getElementById('file-loaded').classList.remove('visible');
-    document.getElementById('encoding-detected').style.display = 'none';
-    currentFileName = '替換結果.txt';
-    document.getElementById('encoding-select').value = 'auto';
-    const zone = document.getElementById('upload-zone');
-    const inp = zone.querySelector('input[type=file]');
-    inp.value = '';
+    document.getElementById('novel-input').value=''; document.getElementById('btn-scan').style.display='none';
+    document.getElementById('scan-section').classList.remove('visible'); document.getElementById('name-chips').innerHTML='';
+    document.getElementById('file-loaded').classList.remove('visible'); document.getElementById('encoding-detected').style.display='none';
+    currentFileName='替換結果.txt'; document.getElementById('encoding-select').value='auto';
+    document.getElementById('upload-zone').querySelector('input[type=file]').value='';
   }
-
-    // ── 替換邏輯 ──
-  function escapeRegex(str) {
-    return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  }
-
+  function escapeRegex(str) { return str.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'); }
   function getReplaced() {
-    const text = document.getElementById('novel-input').value;
-    const pairs = getPairs();
-    let result = text;
-    pairs.forEach(pair => {
-      const regex = new RegExp(escapeRegex(pair.from), 'g');
-      result = result.replace(regex, '\x00' + pair.to + '\x00');
-    });
+    const text=document.getElementById('novel-input').value; const pairs=getPairs(); let result=text;
+    pairs.forEach(pair=>{ const regex=new RegExp(escapeRegex(pair.from),'g'); result=result.replace(regex,'\x00'+pair.to+'\x00'); });
     return result;
   }
-
   function doReplace() {
-    const text = document.getElementById('novel-input').value;
+    const text=document.getElementById('novel-input').value;
     if (!text.trim()) { alert('請先上傳 .txt 檔案或貼入小說文字！'); return; }
-    const pairs = getPairs();
-    if (pairs.length === 0) { alert('請填入至少一組替換名字！'); return; }
-
-    let result = text;
-    let totalCount = 0;
-    pairs.forEach(pair => {
-      const regex = new RegExp(escapeRegex(pair.from), 'g');
-      const matches = (result.match(regex) || []).length;
-      totalCount += matches;
-      result = result.replace(regex, '\x00' + pair.to + '\x00');
-    });
-
-    const escaped = result.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-    const highlighted = escaped.replace(/\x00([^\x00]+)\x00/g, '<mark>$1</mark>');
-
-    document.getElementById('result-text').innerHTML = highlighted;
-    document.getElementById('stats-display').innerHTML = `共替換 <span>${totalCount}</span> 處`;
-
-    const section = document.getElementById('result-section');
-    section.classList.add('visible');
-    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-
-    const copyBtn = document.getElementById('copy-btn');
-    copyBtn.textContent = '複製全文';
-    copyBtn.classList.remove('copied');
+    const pairs=getPairs(); if(pairs.length===0){alert('請填入至少一組替換名字！');return;}
+    let result=text; let totalCount=0;
+    pairs.forEach(pair=>{ const regex=new RegExp(escapeRegex(pair.from),'g'); const matches=(result.match(regex)||[]).length; totalCount+=matches; result=result.replace(regex,'\x00'+pair.to+'\x00'); });
+    const escaped=result.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    const highlighted=escaped.replace(/\x00([^\x00]+)\x00/g,'<mark>$1</mark>');
+    document.getElementById('result-text').innerHTML=highlighted;
+    document.getElementById('stats-display').innerHTML='共替換 <span>'+totalCount+'</span> 處';
+    const section=document.getElementById('result-section'); section.classList.add('visible'); section.scrollIntoView({behavior:'smooth',block:'start'});
+    const copyBtn=document.getElementById('copy-btn'); copyBtn.textContent='複製全文'; copyBtn.classList.remove('copied');
   }
-
   function getFinalText() {
-    const text = document.getElementById('novel-input').value;
-    const pairs = getPairs();
-    let result = text;
-    pairs.forEach(pair => {
-      const regex = new RegExp(escapeRegex(pair.from), 'g');
-      result = result.replace(regex, pair.to);
-    });
+    const text=document.getElementById('novel-input').value; const pairs=getPairs(); let result=text;
+    pairs.forEach(pair=>{ const regex=new RegExp(escapeRegex(pair.from),'g'); result=result.replace(regex,pair.to); });
     return result;
   }
-
   function copyResult() {
-    navigator.clipboard.writeText(getFinalText()).then(() => {
-      const btn = document.getElementById('copy-btn');
-      btn.textContent = '✓ 已複製！';
-      btn.classList.add('copied');
-      setTimeout(() => { btn.textContent = '複製全文'; btn.classList.remove('copied'); }, 2000);
-    });
+    navigator.clipboard.writeText(getFinalText()).then(()=>{ const btn=document.getElementById('copy-btn'); btn.textContent='✓ 已複製！'; btn.classList.add('copied'); setTimeout(()=>{btn.textContent='複製全文';btn.classList.remove('copied');},2000); });
   }
-
   function downloadResult() {
-    const text = getFinalText();
-    const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = currentFileName;
-    a.click();
-    URL.revokeObjectURL(url);
+    const text=getFinalText(); const blob=new Blob([text],{type:'text/plain;charset=utf-8'}); const url=URL.createObjectURL(blob);
+    const a=document.createElement('a'); a.href=url; a.download=currentFileName; a.click(); URL.revokeObjectURL(url);
   }
 </script>
 </body>
