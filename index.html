@@ -371,12 +371,22 @@
     document.getElementById('file-loaded').classList.add('visible');
   }
   function tryEncodings(file, queue, index, detectedEl) {
-    if (index >= queue.length) { detectedEl.textContent = '⚠️ 無法自動偵測'; detectedEl.style.color = '#c44'; detectedEl.style.display = 'inline'; return; }
+    if (index >= queue.length) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        document.getElementById('novel-input').value = e.target.result;
+        document.getElementById('btn-scan').style.display = 'inline-block';
+        detectedEl.textContent = '⚠️ 自動偵測失敗，已強制以 UTF-8 載入'; detectedEl.style.color = '#c44'; detectedEl.style.display = 'inline';
+        document.getElementById('encoding-select').value = 'UTF-8';
+      };
+      reader.readAsText(file, 'UTF-8');
+      return;
+    }
     const enc = queue[index];
     const reader = new FileReader();
     reader.onload = function(e) {
       const text = e.target.result;
-      if (!text.includes('?')) {
+      if (!text.includes('\uFFFD')) {
         document.getElementById('novel-input').value = text;
         document.getElementById('btn-scan').style.display = 'inline-block';
         detectedEl.textContent = '✓ 自動偵測為 ' + enc; detectedEl.style.color = '#8b3a52'; detectedEl.style.display = 'inline';
