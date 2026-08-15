@@ -179,13 +179,14 @@ function renderList(){
 }
 
 function renderDeposit(item){
-  const exp=expandedId===item.id;
+  const exp=expandedId===item.id, big=bigImgId===item.id;
   return `<div class="item" style="background:#f0faf4;border-color:#b2ddc4;">
     <div class="item-row" onclick="toggleExp('${item.id}')">
-      <div class="thumb-ph" style="background:#c8ecd5;">💰</div>
+      ${item.img?`<img class="thumb" src="${item.img}" onclick="event.stopPropagation();toggleBig('${item.id}')">`:`<div class="thumb-ph" style="background:#c8ecd5;">💰</div>`}
       <div style="flex:1;"><div class="item-name" style="color:#2d7a4f;">存款${item.note?'｜'+item.note:''}</div><div class="item-date">${item.date}</div></div>
       <div class="item-price" style="color:#2d7a4f;">+¥${item.amount}</div>
     </div>
+    ${big&&item.img?`<img class="big-img" src="${item.img}" onclick="toggleBig('${item.id}')">`:''}
     ${exp?`<div class="item-detail" style="border-color:#b2ddc4;">
       <div class="btn-row"><button class="btn" style="background:#fdecea;color:#c0392b;" onclick="delDeposit('${item.id}')">🗑 刪除</button></div>
     </div>`:''}
