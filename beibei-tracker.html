@@ -154,9 +154,8 @@ function render(){ renderSummary(); renderTabs(); renderList(); renderAIPanel();
 function renderSummary(){
   const bal=balance();
   $('summaryCards').innerHTML=`
-    <div class="card" style="background:#e6f4ec;border-color:#b2ddc4;"><div class="lbl">💰 總存款</div><div class="val" style="color:#2d7a4f;">¥${totalDeposit()}</div></div>
     <div class="card" style="background:#fdecea;border-color:#f5b7b1;"><div class="lbl">🛍 未結清</div><div class="val" style="color:#c0392b;">¥${totalPurchase()}</div></div>
-    <div class="card" style="background:${bal>=0?'#e8f4fd':'#fef3e2'};border-color:${bal>=0?'#aad4f0':'#fad7a0'};"><div class="lbl">${bal>=0?'✅ 餘額':'⚠️ 需補款'}</div><div class="val" style="color:${bal>=0?'#1a6fa8':'#e67e22'};">¥${bal}</div></div>`;
+    <div class="card" style="background:${bal>=0?'#e8f4fd':'#fef3e2'};border-color:${bal>=0?'#aad4f0':'#fad7a0'};"><div class="lbl">${bal>=0?'✅ 存款餘額':'⚠️ 需補款'}</div><div class="val" style="color:${bal>=0?'#1a6fa8':'#e67e22'};">¥${bal}</div></div>`;
 }
 
 function renderTabs(){
