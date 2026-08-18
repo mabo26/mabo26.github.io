@@ -147,7 +147,8 @@ const $ = id => document.getElementById(id);
 
 function totalDeposit(){ return state.deposits.reduce((s,d)=>s+d.amount,0); }
 function totalPurchase(){ return state.purchases.filter(p=>!p.settled).reduce((s,p)=>s+(p.price*p.qty),0); }
-function balance(){ return totalDeposit()-totalPurchase(); }
+function totalPurchaseAll(){ return state.purchases.reduce((s,p)=>s+(p.price*p.qty),0); }
+function balance(){ return totalDeposit()-totalPurchaseAll(); }
 
 function render(){ renderSummary(); renderTabs(); renderList(); renderAIPanel(); renderForm(); }
 
